@@ -4,7 +4,7 @@
   "main": "mod.js",
   "scripts": {
     "build": "tsc ./mod.ts",
-    "test": "ts-node ./mod.test.ts"
+    "test": "ts-node ./test.ts"
   },
   "author": "Thomas Reggi",
   "dependencies": {

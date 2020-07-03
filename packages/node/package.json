@@ -1,0 +1,14 @@
+{
+  "name": "@reggi/node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mod.js",
+  "scripts": {
+    "build-json": "node -e \"console.log(JSON.stringify(require('module').builtinModules, null, 2))\" > native_modules.json",
+    "build": "tsc ./mod.ts",
+    "test": "ts-node ./test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
