@@ -1,0 +1,29 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  id-token: write
+
+jobs:
+  npm-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create .npmrc file
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public

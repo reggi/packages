@@ -1,0 +1,65 @@
+{
+  "name": "add-pkg-exports",
+  "version": "0.0.0",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reggi/add-pkg-exports.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./bin": {
+      "require": "./dist/bin.cjs",
+      "import": "./dist/bin.js"
+    }
+  },
+  "bin": {
+    "name": "dist/bin.js"
+  },
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "npm run build:only && npm run style:fix && npm run pkg:fix",
+    "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
+    "build:test": "npm run build && npm run test",
+    "build:watch": "npm run build:only -- --watch",
+    "depcheck": "depcheck --ignores='@types/node,sort-package-json'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pkg": "sort-package-json --check",
+    "pkg:fix": "sort-package-json",
+    "report": "open ./coverage/index.html",
+    "style": "prettier --check .",
+    "style:fix": "prettier --write .",
+    "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
+    "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test",
+    "test:snap": "npm run test -- --test-update-snapshots",
+    "typecheck": "tsc"
+  },
+  "prettier": "@github/prettier-config",
+  "dependencies": {
+    "glob": "^11.0.0"
+  },
+  "devDependencies": {
+    "@github/prettier-config": "^0.0.6",
+    "@types/node": "^22.9.0",
+    "@typescript-eslint/parser": "^8.14.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.15.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-node-specifier": "^1.0.2",
+    "eslint-plugin-treekeeper": "^1.1.0",
+    "monocart-coverage-reports": "^2.11.2",
+    "prettier": "^3.2.5",
+    "sort-package-json": "^2.10.1",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
