@@ -9,7 +9,7 @@ const files = argv
 if (argv.includes('--help')) {
   console.log(
     `
-Usage: add-exports [glob-pattern]
+Usage: add-pkg-exports [glob-pattern]
 Description: Add exports field to package.json based on the files found by the glob pattern
 `.trim(),
   )
