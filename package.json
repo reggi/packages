@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/reggi/add-pkg-exports.git"
   },
+  "license": "MIT",
   "type": "module",
   "bin": {
     "name": "dist/bin.js"
