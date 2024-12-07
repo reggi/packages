@@ -22,10 +22,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - build: Build
+      - name: Build
         run: npm run build
 
-      - build: Test
+      - name: Test
         run: npm run test
 
       - name: Create .npmrc file
