@@ -2,6 +2,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import {globSync} from 'glob'
+import groupBy from 'object.groupby'
 
 const argv = process.argv.slice(2)
 const files = argv
@@ -29,9 +30,7 @@ const x = resolvedFiles.sort().map(value => {
   return {extname, key, rel, keyword}
 })
 
-const grouped = Object.entries(Object.groupBy(x, v => v.key)).sort(([a], [b]) =>
-  (a as string).localeCompare(b as string),
-)
+const grouped = Object.entries(groupBy(x, v => v.key)).sort(([a], [b]) => (a as string).localeCompare(b as string))
 
 const exportsProperty = Object.fromEntries(
   grouped.map(([key, value]) => {

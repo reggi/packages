@@ -44,11 +44,13 @@
   },
   "prettier": "@github/prettier-config",
   "dependencies": {
-    "glob": "^11.0.0"
+    "glob": "^11.0.0",
+    "object.groupby": "^1.0.3"
   },
   "devDependencies": {
     "@github/prettier-config": "^0.0.6",
     "@types/node": "^22.9.0",
+    "@types/object.groupby": "^1.0.4",
     "@typescript-eslint/parser": "^8.14.0",
     "depcheck": "^1.4.7",
     "eslint": "^9.15.0",
