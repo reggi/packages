@@ -6,18 +6,14 @@ import {globSync} from 'glob'
 const argv = process.argv.slice(2)
 const files = argv
 
-if (argv.includes('--help')) {
+if (argv.includes('--help') || !files.length) {
   console.log(
     `
-Usage: add-pkg-exports [glob-pattern]
+Usage: add-pkg-exports <glob-pattern>
 Description: Add exports field to package.json based on the files found by the glob pattern
 `.trim(),
   )
   process.exit(0)
-}
-
-if (!files) {
-  throw new Error('Please provide a glob pattern to search for')
 }
 
 const resolvedFiles = files.length === 1 ? globSync(files[0], {cwd: process.cwd()}) : files
