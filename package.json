@@ -7,16 +7,6 @@
     "url": "git+https://github.com/reggi/add-pkg-exports.git"
   },
   "type": "module",
-  "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
-    },
-    "./bin": {
-      "require": "./dist/bin.cjs",
-      "import": "./dist/bin.js"
-    }
-  },
   "bin": {
     "name": "dist/bin.js"
   },
