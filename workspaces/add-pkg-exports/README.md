@@ -1,6 +1,6 @@
 # add-pkg-exports
 
-This is a command line tool to populate the `exports` field in a package json from a glob of files.
+This is a command line tool to populate the `exports` field in a package.json from a glob of files.
 
 ```bash
 npx add-pkg-exports
