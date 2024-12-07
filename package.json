@@ -6,11 +6,11 @@
   "scripts": {
     "build": "npm run style:fix && npm run pkg:fix",
     "build-all": "npm run build --ws",
-    "test-all": "npm run test --ws",
     "pkg": "sort-package-json --check",
     "pkg:fix": "sort-package-json",
     "style": "prettier --check .",
-    "style:fix": "prettier --write ."
+    "style:fix": "prettier --write .",
+    "test-all": "npm run test --ws"
   },
   "prettier": "@github/prettier-config",
   "devDependencies": {
