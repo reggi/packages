@@ -1,8 +1,7 @@
 {
   "packages": {
     ".": {
-      "releaseType": "node",
-      "packageName": "@reggi/ts-starter"
+      "releaseType": "node"
     }
   }
 }
