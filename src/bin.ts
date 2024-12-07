@@ -16,7 +16,8 @@ Description: Add exports field to package.json based on the files found by the g
   process.exit(0)
 }
 
-const resolvedFiles = files.length === 1 ? globSync(files[0], { absolute: true, cwd: process.cwd()}) : files.map(file => path.resolve(file))
+const resolvedFiles =
+  files.length === 1 ? globSync(files[0], {absolute: true, cwd: process.cwd()}) : files.map(file => path.resolve(file))
 
 const x = resolvedFiles.sort().map(value => {
   const relative = path.relative(process.cwd(), value)
