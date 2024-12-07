@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1](https://github.com/reggi/add-pkg-exports/compare/v1.0.0...v1.0.1) (2024-12-07)
+
+
+### Bug Fixes
+
+* command name ([01ea117](https://github.com/reggi/add-pkg-exports/commit/01ea117dfcbeb2740fa406a34704f8dafd81d03f))
+* inconsitences with unix glob and npm glob ([63f92da](https://github.com/reggi/add-pkg-exports/commit/63f92daf8b1aef42545665cf4265479d66bc962c))
+* no argument scenario ([436454c](https://github.com/reggi/add-pkg-exports/commit/436454c9bf30cabe65066b31dc0dff4209d0a57e))
+* remove exports from package ([7a3d83c](https://github.com/reggi/add-pkg-exports/commit/7a3d83ca594a2a0ccf422eb4bb300e39a30e5992))
+
 ## 1.0.0 (2024-12-07)
 
 
