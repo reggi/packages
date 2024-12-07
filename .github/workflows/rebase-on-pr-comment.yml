@@ -1,0 +1,31 @@
+name: Rebase on PR Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  rebase:
+    if: github.event.issue.pull_request != null && contains(github.event.comment.body, '.rebase')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.issue.pull_request.head.ref }}
+      
+      - name: Set up Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+      
+      - name: Fetch base branch
+        run: git fetch origin ${{ github.event.issue.pull_request.base.ref }}
+      
+      - name: Rebase PR
+        run: git rebase origin/${{ github.event.issue.pull_request.base.ref }}
+      
+      - name: Push changes
+        run: git push --force-with-lease
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
