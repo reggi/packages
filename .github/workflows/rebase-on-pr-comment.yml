@@ -23,7 +23,7 @@ jobs:
         run: git fetch origin ${{ github.event.issue.pull_request.base.ref }}
       
       - name: Rebase PR
-        run: git rebase origin/${{ github.event.issue.pull_request.base.ref }}
+        run: git rebase origin/${{ github.event.pull_request.base.ref }}
       
       - name: Push changes
         run: git push --force-with-lease
