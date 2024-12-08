@@ -27,13 +27,7 @@
       "hidden": true
     }
   ],
-  "prerelease": false,
-  "group-pull-request-title-pattern": "chore: release ${version}",
-  "pull-request-title-pattern": "chore: release${component} ${version}",
-  "prerelease-type": "pre.0",
   "packages": {
-    "workspaces/add-pkg-exports": {
-      "release-type": "node"
-    }
+    "workspaces/add-pkg-exports": {}
   }
 }
