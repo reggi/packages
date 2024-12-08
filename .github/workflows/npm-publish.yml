@@ -40,13 +40,13 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build --ws=${{ env.PACKAGE_NAME }} --if-present
+        run: npm run build --w=${{ env.PACKAGE_NAME }} --if-present
 
       - name: Test
-        run: npm run test --ws=${{ env.PACKAGE_NAME }} --if-present
+        run: npm run test --w=${{ env.PACKAGE_NAME }} --if-present
 
       - name: Create .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
       - name: Publish to npm
-        run: npm publish --ws=${{ env.PACKAGE_NAME }} --provenance --access public
+        run: npm publish --w=${{ env.PACKAGE_NAME }} --provenance --access public
