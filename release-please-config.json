@@ -10,6 +10,7 @@
     {"type": "chore", "section": "Chores", "hidden": true}
   ],
   "packages": {
-    "workspaces/add-pkg-exports": {}
+    "workspaces/add-pkg-exports": {},
+    "workspaces/workspace-paths": {}
   }
 }
