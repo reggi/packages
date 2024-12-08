@@ -32,6 +32,8 @@
   "pull-request-title-pattern": "chore: release${component} ${version}",
   "prerelease-type": "pre.0",
   "packages": {
-    "workspaces/add-pkg-exports": {}
+    "workspaces/add-pkg-exports": {
+      "release-type": "node"
+    }
   }
 }
