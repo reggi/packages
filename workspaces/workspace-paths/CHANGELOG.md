@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/reggi/packages/compare/workspace-paths-v1.1.0...workspace-paths-v1.1.1) (2024-12-08)
+
+
+### Bug Fixes
+
+* add pkg repository for monorepos ([ccae1c7](https://github.com/reggi/packages/commit/ccae1c7a89d5df3bda81cdecea3e3a4f0e16751c))
+
 ## [1.1.0](https://github.com/reggi/add-pkg-exports/compare/workspace-paths-v1.0.0...workspace-paths-v1.1.0) (2024-12-08)
 
 
