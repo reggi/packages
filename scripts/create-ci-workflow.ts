@@ -1,12 +1,12 @@
 import path from 'node:path'
 import yaml from 'yaml'
-import { workspacePaths } from 'workspace-paths'
+import {workspacePaths} from 'workspace-paths'
 import fs from 'node:fs/promises'
 
 const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
   name: `ci-${name || 'root'}`,
   on: {
-    "workflow_dispatch": {},
+    workflow_dispatch: {},
     push: {
       branches: ['main'],
       paths: isRoot ? ['/*'] : [`workspaces/${name}/**`],
