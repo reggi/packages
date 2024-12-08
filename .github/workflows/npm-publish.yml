@@ -3,6 +3,11 @@ name: npm-publish
 on:
   release:
     types: [created]
+  workflow_dispatch:
+    inputs:
+      package_name:
+        description: 'The name of the package to publish'
+        required: true
 
 permissions:
   id-token: write
@@ -20,8 +25,13 @@ jobs:
           node-version: 22.x
 
       - name: Extract package name from release title
+        if: github.event_name == 'release'
         id: extract-package-name
         run: echo "PACKAGE_NAME=$(echo '${{ github.event.release.name }}' | cut -d ':' -f 1)" >> $GITHUB_ENV
+
+      - name: Set package name from workflow dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "PACKAGE_NAME=${{ github.event.inputs.package_name }}" >> $GITHUB_ENV
 
       - name: echo PACKAGE_NAME
         run: echo $PACKAGE_NAME
