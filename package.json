@@ -1,5 +1,6 @@
 {
   "name": "@reggi/packages",
+  "type": "module",
   "workspaces": [
     "workspaces/*"
   ],
@@ -14,8 +15,12 @@
   },
   "prettier": "@github/prettier-config",
   "devDependencies": {
+    "yaml": "^2.6.1",
     "@github/prettier-config": "^0.0.6",
+    "@types/node": "^22.10.1",
+    "@types/yaml": "^1.9.6",
     "prettier": "^3.2.5",
-    "sort-package-json": "^2.10.1"
+    "sort-package-json": "^2.10.1",
+    "workspace-paths": "^1.0.0"
   }
 }
