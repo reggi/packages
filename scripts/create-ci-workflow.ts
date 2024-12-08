@@ -6,6 +6,7 @@ import fs from 'node:fs/promises'
 const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
   name: `ci-${name || 'root'}`,
   on: {
+    "workflow-dispatch": {},
     push: {
       branches: ['main'],
       paths: isRoot ? ['/*'] : [`workspaces/${name}/**`],
