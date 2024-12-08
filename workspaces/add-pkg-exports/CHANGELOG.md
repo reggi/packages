@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0 (2024-12-08)
+
+
+### Bug Fixes
+
+* uses groupBy shim for older versions of node ([c19262a](https://github.com/reggi/add-pkg-exports/commit/c19262ac02b495a261e79b3e0ac2726e7977c9c0))
+
+
+### Documentation
+
+* fix typo ([a1ff83f](https://github.com/reggi/add-pkg-exports/commit/a1ff83fca0518e1f4530b8605aa955b37d797c76))
+
 ## [1.0.1](https://github.com/reggi/add-pkg-exports/compare/v1.0.0...v1.0.1) (2024-12-07)
 
 ### Bug Fixes
