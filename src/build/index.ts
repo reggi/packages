@@ -1,8 +1,20 @@
+#!/usr/bin/env -S npx tsx
 import path from 'node:path'
 import yaml from 'yaml'
 import {workspacePaths} from 'workspace-paths'
 import fs from 'node:fs/promises'
 import {execSync} from 'node:child_process'
+
+const porcelainCheck =
+  `
+if [[ -z $(git status --porcelain) ]]; then
+  echo "The repository is clean."
+else
+  echo "The repository has changes:"
+  git diff
+  exit 1
+fi
+`.trim() + '\n'
 
 const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
   name: `ci-${name || 'root'}`,
@@ -54,6 +66,10 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
           run: `npm run build ${isRoot ? '' : `-w=${name}`} --if-present`,
         },
         {
+          name: 'Check if repo is porcelain',
+          run: porcelainCheck,
+        },
+        {
           name: 'Report results',
           run: `npm run test ${isRoot ? '' : `-w=${name}`} --if-present`,
         },
@@ -62,10 +78,14 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
   },
 })
 
+const convertGitUrl = url => {
+  return url.replace(':', '/').replace('git@', 'git+ssh://git@')
+}
+
 const getOriginRemote = (): string => {
   try {
     const remoteUrl = execSync('git config --get remote.origin.url').toString().trim()
-    return remoteUrl
+    return convertGitUrl(remoteUrl)
   } catch (error) {
     console.error('Error getting origin remote URL:', error)
     process.exit(1)
@@ -81,7 +101,7 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
     url: repositoryUrl,
     ...(name == '' ? {} : {directory: `workspaces/${path.basename(workspace)}`}),
   }
-  await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2))
+  await fs.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n')
   return packageJson
 }
 
@@ -90,7 +110,7 @@ const repositoryUrl = getOriginRemote()
 
 const manifest = []
 const packages = []
-
+const readme = []
 for (const workspace of workspaces) {
   const rel = path.relative(process.cwd(), workspace)
   const name = path.basename(rel)
@@ -98,10 +118,16 @@ for (const workspace of workspaces) {
   const result = buildAndTestTemplate(name)
   const content = yaml.stringify(result)
   await fs.writeFile(path.join(process.cwd(), '.github', 'workflows', filename), content)
-  const {version} = await updatePackageJson(name, workspace, repositoryUrl)
+  const {version, name: pkgName} = await updatePackageJson(name, workspace, repositoryUrl)
   if (name) {
     manifest.push([`workspaces/${name}`, version])
     packages.push([`workspaces/${name}`, {}])
+    readme.push({
+      name,
+      readme: `[readme](.workspaces/${name}/README.md)`,
+      version,
+      url: `https://www.npmjs.com/package/${pkgName}`,
+    })
   }
 }
 
@@ -117,10 +143,10 @@ await fs.writeFile(
     },
     null,
     2,
-  ),
+  ) + '\n',
 )
 
 await fs.writeFile(
   path.join(process.cwd(), '.release-please-manifest.json'),
-  JSON.stringify(Object.fromEntries(manifest), null, 2),
+  JSON.stringify(Object.fromEntries(manifest), null, 2) + '\n',
 )

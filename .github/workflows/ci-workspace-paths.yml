@@ -35,5 +35,14 @@ jobs:
         run: npm ci
       - name: Run build script
         run: npm run build -w=workspace-paths --if-present
+      - name: Check if repo is porcelain
+        run: |
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "The repository is clean."
+          else
+            echo "The repository has changes:"
+            git diff
+            exit 1
+          fi
       - name: Report results
         run: npm run test -w=workspace-paths --if-present

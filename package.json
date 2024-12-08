@@ -1,16 +1,17 @@
 {
   "name": "@reggi/packages",
+  "version": "",
   "repository": {
     "type": "git",
-    "url": "git@github.com:reggi/packages.git"
+    "url": "git+ssh://git@github.com/reggi/packages.git"
   },
   "type": "module",
   "workspaces": [
     "workspaces/*"
   ],
   "scripts": {
-    "build": "npm run style:fix && npm run pkg:fix && npm pkg fix",
-    "build-all": "npm run build --ws",
+    "build": "./src/build/index.ts && npm run style:fix && npm run pkg:fix && npm pkg fix",
+    "build-all": "npm run build --ws --include-workspace-root",
     "pkg": "sort-package-json --check",
     "pkg:fix": "sort-package-json",
     "style": "prettier --check .",
@@ -26,6 +27,5 @@
     "sort-package-json": "^2.10.1",
     "workspace-paths": "^1.0.0",
     "yaml": "^2.6.1"
-  },
-  "version": ""
+  }
 }
