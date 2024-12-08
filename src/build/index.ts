@@ -153,7 +153,7 @@ await fs.writeFile(
 
 await fs.writeFile(
   path.join(process.cwd(), 'README.md'),
-  [`# packages`, 'This is a monorepo managed by release-please for my pesonal npm packages.', json2md(readme)].join(
+  [`# packages`, 'This is a monorepo managed by release-please for my personal npm packages.', json2md(readme)].join(
     '\n',
   ),
 )
