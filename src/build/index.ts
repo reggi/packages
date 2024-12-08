@@ -7,10 +7,10 @@ import {execSync} from 'node:child_process'
 
 const porcelainCheck =
   `
-if [[ -z $(git status --porcelain) ]]; then
+if [[ -z $(git diff --name-only) ]]; then
   echo "The repository is clean."
 else
-  echo "The repository has changes:"
+  echo "The repository has unstaged changes:"
   git diff
   exit 1
 fi
