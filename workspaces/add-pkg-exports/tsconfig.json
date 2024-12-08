@@ -13,5 +13,6 @@
     "strictNullChecks": true,
     "noEmit": true,
     "resolveJsonModule": true
-  }
+  },
+  "ignore": ["node_modules", "dist", "coverage"]
 }

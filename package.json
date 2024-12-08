@@ -39,8 +39,18 @@
     "@github/prettier-config": "^0.0.6",
     "@types/node": "^22.10.1",
     "@types/yaml": "^1.9.6",
+    "@typescript-eslint/parser": "^8.14.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.15.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-node-specifier": "^1.0.2",
+    "eslint-plugin-treekeeper": "^1.1.0",
+    "monocart-coverage-reports": "^2.11.2",
     "prettier": "^3.2.5",
     "sort-package-json": "^2.10.1",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
     "workspace-paths": "^1.0.0",
     "yaml": "^2.6.1"
   }

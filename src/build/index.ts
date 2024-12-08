@@ -6,6 +6,7 @@ import fs from 'node:fs/promises'
 import {execSync} from 'node:child_process'
 import {json2md} from '../../workspaces/knevee/src/build/json2md.ts'
 import {glob} from 'glob'
+import {dependencies} from '../../workspaces/knevee/examples/dep-check-invalid.ts'
 
 const porcelainCheck =
   `
@@ -118,6 +119,23 @@ const rootScripts = {
   'test-all': 'npm run test --ws',
 }
 
+const sharedDevDependencies = {
+  '@github/prettier-config': '^0.0.6',
+  '@types/node': '^22.9.0',
+  '@typescript-eslint/parser': '^8.14.0',
+  depcheck: '^1.4.7',
+  eslint: '^9.15.0',
+  'eslint-plugin-import': '^2.31.0',
+  'eslint-plugin-node-specifier': '^1.0.2',
+  'eslint-plugin-treekeeper': '^1.1.0',
+  'monocart-coverage-reports': '^2.11.2',
+  prettier: '^3.2.5',
+  'sort-package-json': '^2.10.1',
+  tsup: '^8.3.5',
+  tsx: '^4.19.2',
+  typescript: '^5.6.3',
+}
+
 const exists = async (filePath: string) => {
   try {
     await fs.access(filePath)
@@ -137,9 +155,9 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
   const checkSrcFiles = await glob(srcFiles + '/*.ts')
   const {build: buildScript, 'build:only': buildOnly, ...pkgRest} = scripts
   const packageJson = JSON.parse(packageJsonContent)
-  if (!checkSrcFiles.length) {
-    delete packageJson.devDependencies['tsup']
-  }
+
+  const {tsup, ...devDeps} = packageJson.devDependencies
+
   const extend = {
     scripts: {
       build: buildExists ? `${relBuild} && ${buildScript}` : buildScript,
@@ -156,6 +174,11 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
     },
     license: 'MIT',
     author: 'reggi <me@reggi.com> (https://reggi.com)',
+    devDependencies: {
+      ...sharedDevDependencies,
+      ...devDeps,
+      ...(checkSrcFiles.length ? {tsup} : {}),
+    },
   }
   await fs.writeFile(packageJsonPath, JSON.stringify({...packageJson, ...extend}, null, 2) + '\n')
   return packageJson
@@ -164,9 +187,19 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
 const workspaces = await workspacePaths({cwd: process.cwd(), includeRoot: true})
 const repositoryUrl = getOriginRemote()
 
-const manifest = []
-const packages = []
-const readme = []
+const manifest: [string, string][] = []
+const packages: [string, object][] = []
+const readme: {name: string; version: string; url: string}[] = []
+
+const copyFromRoot = ['eslint.config.js', 'mcr.config.js', 'tsconfig.json', '.prettierignore', '.gitignore']
+
+const readRoot = await Promise.all(
+  copyFromRoot.map(async file => {
+    const basename = path.basename(file)
+    const content = await fs.readFile(path.join(process.cwd(), file), 'utf8')
+    return {basename, content}
+  }),
+)
 
 for (const workspace of workspaces) {
   const rel = path.relative(process.cwd(), workspace)
@@ -175,6 +208,11 @@ for (const workspace of workspaces) {
   const result = buildAndTestTemplate(name)
   const content = yaml.stringify(result)
   await fs.writeFile(path.join(process.cwd(), '.github', 'workflows', filename), content)
+
+  for (const {basename, content} of readRoot) {
+    await fs.writeFile(path.join(workspace, basename), content)
+  }
+
   const {version, name: pkgName} = await updatePackageJson(name, workspace, repositoryUrl)
   if (name) {
     manifest.push([`workspaces/${name}`, version])
