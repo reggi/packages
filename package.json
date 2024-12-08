@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "build": "src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm pkg fix",
+    "build-all": "npm run build --ws --include-workspace-root",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
     "depcheck": "depcheck --ignores='sort-package-json'",
@@ -28,11 +29,10 @@
     "style": "prettier --check .",
     "style:fix": "prettier --write .",
     "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
+    "test-all": "npm run test --ws",
     "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test",
     "test:snap": "npm run test -- --test-update-snapshots",
-    "typecheck": "tsc",
-    "build-all": "npm run build --ws --include-workspace-root",
-    "test-all": "npm run test --ws"
+    "typecheck": "tsc"
   },
   "prettier": "@github/prettier-config",
   "devDependencies": {

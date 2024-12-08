@@ -5,7 +5,7 @@ import {workspacePaths} from 'workspace-paths'
 import fs from 'node:fs/promises'
 import {execSync} from 'node:child_process'
 import {json2md} from '../../workspaces/knevee/src/build/json2md.ts'
-import { glob } from 'glob'
+import {glob} from 'glob'
 
 const porcelainCheck =
   `
@@ -133,13 +133,17 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
   const relBuild = path.join('src', 'build', 'index.ts')
   const build = path.join(workspace, relBuild)
   const buildExists = await exists(build)
-  const checkSrcFiles = await glob('./src/*.ts')
-  const {build: buildScript, "build:only": buildOnly, ...pkgRest} = scripts
+  const srcFiles = path.join(workspace, 'src')
+  const checkSrcFiles = await glob(srcFiles + '/*.ts')
+  const {build: buildScript, 'build:only': buildOnly, ...pkgRest} = scripts
   const packageJson = JSON.parse(packageJsonContent)
+  if (!checkSrcFiles.length) {
+    delete packageJson.devDependencies['tsup']
+  }
   const extend = {
     scripts: {
       build: buildExists ? `${relBuild} && ${buildScript}` : buildScript,
-      ...(checkSrcFiles.length ? { 'build:only': buildOnly } : {}),
+      ...(checkSrcFiles.length ? {'build:only': buildOnly} : {}),
       ...pkgRest,
       ...(name == '' ? rootScripts : {}),
     },
