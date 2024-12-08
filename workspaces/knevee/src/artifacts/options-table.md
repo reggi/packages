@@ -33,10 +33,10 @@
 |  |  | `--disable-warning=MODULE_TYPELESS_PACKAGE_JSON` |
 |  |  | `--disable-warning=ExperimentalWarning` |
 |  |  | `-e` |
-| runtimeKey | string \| node \| deno |  |
+| runtimeKey | string \| node \| deno | `undefined` |
 | path | undefined \| string | path to dir or file |
 | __filename | undefined \| string | path to dir or file |
-| importMeta | undefined \| ImportMeta |  |
+| importMeta | undefined \| ImportMeta | `undefined` |
 | cwd | string \| undefined | current working directory |
 | argv | string[] \| undefined | command arguments |
 | subprocess | boolean | runs the command as a subprocess |

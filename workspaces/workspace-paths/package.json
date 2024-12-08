@@ -32,11 +32,10 @@
     "src/"
   ],
   "scripts": {
-    "build": "npm run build:only && npm run style:fix && npm run pkg:fix && npm pkg fix",
-    "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
+    "build": "npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm pkg fix",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
-    "depcheck": "depcheck --ignores='@types/node,sort-package-json'",
+    "depcheck": "depcheck --ignores='sort-package-json'",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "pkg": "sort-package-json --check",
