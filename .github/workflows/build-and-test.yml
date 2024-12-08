@@ -52,8 +52,9 @@ jobs:
       - name: Check for uncommitted changes
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo "There are changes from build that are not checked in."
-            exit 1
+              echo "There are changes from build that are not checked in."
+              git diff
+              exit 1
           fi
         working-directory: ${{ github.event.head_commit.modified_paths[0] }}
 
