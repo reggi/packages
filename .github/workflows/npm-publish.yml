@@ -36,8 +36,15 @@ jobs:
       - name: echo PACKAGE_NAME
         run: echo $PACKAGE_NAME
 
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build
         run: npm run build --w=${{ env.PACKAGE_NAME }} --if-present

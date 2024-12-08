@@ -4,9 +4,9 @@ import yaml from 'yaml'
 import {workspacePaths} from 'workspace-paths'
 import fs from 'node:fs/promises'
 import {execSync} from 'node:child_process'
+// eslint-disable-next-line
 import {json2md} from '../../workspaces/knevee/src/build/json2md.ts'
 import {glob} from 'glob'
-import {dependencies} from '../../workspaces/knevee/examples/dep-check-invalid.ts'
 
 const porcelainCheck =
   `
@@ -61,8 +61,17 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
           },
         },
         {
+          name: 'Cache Node.js modules',
+          uses: 'actions/cache@v3',
+          with: {
+            path: 'node_modules',
+            key: "${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}",
+            'restore-keys': '${{ runner.os }}-node-\n',
+          },
+        },
+        {
           name: 'Install Node.js dependencies',
-          run: 'npm ci',
+          run: 'npm ci --ignore-scripts',
         },
         {
           name: 'Run build script',
@@ -119,22 +128,8 @@ const rootScripts = {
   'test-all': 'npm run test --ws',
 }
 
-const sharedDevDependencies = {
-  '@github/prettier-config': '^0.0.6',
-  '@types/node': '^22.9.0',
-  '@typescript-eslint/parser': '^8.14.0',
-  depcheck: '^1.4.7',
-  eslint: '^9.15.0',
-  'eslint-plugin-import': '^2.31.0',
-  'eslint-plugin-node-specifier': '^1.0.2',
-  'eslint-plugin-treekeeper': '^1.1.0',
-  'monocart-coverage-reports': '^2.11.2',
-  prettier: '^3.2.5',
-  'sort-package-json': '^2.10.1',
-  tsup: '^8.3.5',
-  tsx: '^4.19.2',
-  typescript: '^5.6.3',
-}
+const rootJson = JSON.parse(await fs.readFile(path.join(process.cwd(), 'package.json'), 'utf8'))
+const sharedDevDependencies = rootJson.devDependencies
 
 const exists = async (filePath: string) => {
   try {

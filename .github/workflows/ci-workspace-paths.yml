@@ -31,8 +31,15 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: ${{ matrix.deno-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install Node.js dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
       - name: Run build script
         run: npm run build -w=workspace-paths --if-present
       - name: Check if repo is porcelain

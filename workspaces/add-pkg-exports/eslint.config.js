@@ -3,6 +3,7 @@ import eslintPluginImport from 'eslint-plugin-import'
 import typescriptParser from '@typescript-eslint/parser'
 import {recommended} from 'eslint-plugin-treekeeper'
 import nodeSpecifier from 'eslint-plugin-node-specifier'
+import unusedImports from 'eslint-plugin-unused-imports'
 
 const shared = {
   files: ['src/**/*.ts', 'test/**/*.test.ts'],
@@ -26,8 +27,10 @@ export default [
     plugins: {
       import: eslintPluginImport,
       'node-specifier': nodeSpecifier,
+      'unused-imports': unusedImports,
     },
     rules: {
+      'unused-imports/no-unused-imports': 'error',
       'node-specifier/enforce-node-specifier': 'error',
       'import/extensions': [
         'error',
