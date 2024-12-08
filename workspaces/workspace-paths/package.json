@@ -9,6 +9,11 @@
     "package.json",
     "workspace"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/reggi/packages.git",
+    "directory": "workspaces/workspace-paths"
+  },
   "license": "MIT",
   "author": "reggi <me@reggi.com> (https://reggi.com)",
   "type": "module",

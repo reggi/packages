@@ -11,7 +11,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reggi/add-pkg-exports.git"
+    "url": "git+ssh://git@github.com/reggi/packages.git",
+    "directory": "workspaces/add-pkg-exports"
   },
   "license": "MIT",
   "author": "reggi <me@reggi.com> (https://reggi.com)",
@@ -24,7 +25,7 @@
     "src/"
   ],
   "scripts": {
-    "build": "npm run build:only && npm run style:fix && npm run pkg:fix",
+    "build": "npm run build:only && npm run style:fix && npm run pkg:fix && npm pkg fix",
     "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
