@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/reggi/packages/compare/add-pkg-exports-v1.0.2...add-pkg-exports-v1.0.3) (2024-12-08)
+
+
+### Bug Fixes
+
+* add pkg repository for monorepos ([ccae1c7](https://github.com/reggi/packages/commit/ccae1c7a89d5df3bda81cdecea3e3a4f0e16751c))
+
 ## [1.0.2](https://github.com/reggi/add-pkg-exports/compare/add-pkg-exports-v1.0.1...add-pkg-exports-v1.0.2) (2024-12-08)
 
 
