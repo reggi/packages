@@ -1,7 +1,6 @@
 name: npm-publish
 
 on:
-  workflow_dispatch:
   release:
     types: [created]
 
@@ -12,28 +11,32 @@ jobs:
   npm-publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Download release source
-        run: |
-          curl -L "${{ github.event.release.tarball_url }}" -o source.tar.gz
-          tar -xzf source.tar.gz
-          cd $(ls -d */ | head -n 1)
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
 
+      - name: Extract package name from release title
+        id: extract-package-name
+        run: echo "PACKAGE_NAME=$(echo '${{ github.event.release.name }}' | cut -d ':' -f 1)" >> $GITHUB_ENV
+
+      - name: echo PACKAGE_NAME
+        run: echo $PACKAGE_NAME
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        run: npm run build --if-present
+        run: npm run build --ws=${{ env.PACKAGE_NAME }} --if-present
 
       - name: Test
-        run: npm run test --if-present
+        run: npm run test --ws=${{ env.PACKAGE_NAME }} --if-present
 
       - name: Create .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: npm publish --ws=${{ env.PACKAGE_NAME }} --provenance --access public
