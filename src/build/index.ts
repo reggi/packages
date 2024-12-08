@@ -4,7 +4,7 @@ import yaml from 'yaml'
 import {workspacePaths} from 'workspace-paths'
 import fs from 'node:fs/promises'
 import {execSync} from 'node:child_process'
-
+import {json2md} from '../../workspaces/knevee/src/build/json2md.ts'
 const porcelainCheck =
   `
 if [[ -z $(git diff --name-only) ]]; then
@@ -111,6 +111,7 @@ const repositoryUrl = getOriginRemote()
 const manifest = []
 const packages = []
 const readme = []
+
 for (const workspace of workspaces) {
   const rel = path.relative(process.cwd(), workspace)
   const name = path.basename(rel)
@@ -123,8 +124,7 @@ for (const workspace of workspaces) {
     manifest.push([`workspaces/${name}`, version])
     packages.push([`workspaces/${name}`, {}])
     readme.push({
-      name,
-      readme: `[readme](.workspaces/${name}/README.md)`,
+      name: `[${name}](./workspaces/${name}/README.md)`,
       version,
       url: `https://www.npmjs.com/package/${pkgName}`,
     })
@@ -149,4 +149,11 @@ await fs.writeFile(
 await fs.writeFile(
   path.join(process.cwd(), '.release-please-manifest.json'),
   JSON.stringify(Object.fromEntries(manifest), null, 2) + '\n',
+)
+
+await fs.writeFile(
+  path.join(process.cwd(), 'README.md'),
+  [`# packages`, 'This is a monorepo managed by release-please for my pesonal npm packages.', json2md(readme)].join(
+    '\n',
+  ),
 )
