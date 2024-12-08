@@ -1,7 +1,6 @@
 {
   "name": "add-pkg-exports",
   "version": "1.0.1",
-  "private": false,
   "description": "Tool to add exports field to package.json",
   "keywords": [
     "cli-tool",
@@ -18,7 +17,7 @@
   "author": "reggi <me@reggi.com> (https://reggi.com)",
   "type": "module",
   "bin": {
-    "name": "dist/bin.js"
+    "add-pkg-exports": "dist/bin.js"
   },
   "files": [
     "dist/",
