@@ -1,35 +1,15 @@
 {
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "node",
   "plugins": ["node-workspace"],
   "changelog-sections": [
-    {
-      "type": "feat",
-      "section": "Features",
-      "hidden": false
-    },
-    {
-      "type": "fix",
-      "section": "Bug Fixes",
-      "hidden": false
-    },
-    {
-      "type": "docs",
-      "section": "Documentation",
-      "hidden": false
-    },
-    {
-      "type": "deps",
-      "section": "Dependencies",
-      "hidden": false
-    },
-    {
-      "type": "chore",
-      "section": "Chores",
-      "hidden": true
-    }
+    {"type": "feat", "section": "Features", "hidden": false},
+    {"type": "fix", "section": "Bug Fixes", "hidden": false},
+    {"type": "docs", "section": "Documentation", "hidden": false},
+    {"type": "deps", "section": "Dependencies", "hidden": false},
+    {"type": "chore", "section": "Chores", "hidden": true}
   ],
   "packages": {
-    "workspaces/add-pkg-exports": {
-      "release-type": "node"
-    }
+    "workspaces/add-pkg-exports": {}
   }
 }
