@@ -1,6 +1,6 @@
 name: ci-add-pkg-exports
 on:
-  workflow-dispatch: {}
+  workflow_dispatch: {}
   push:
     branches:
       - main

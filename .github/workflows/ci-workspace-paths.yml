@@ -1,6 +1,6 @@
 name: ci-workspace-paths
 on:
-  workflow-dispatch: {}
+  workflow_dispatch: {}
   push:
     branches:
       - main
