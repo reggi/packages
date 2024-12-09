@@ -228,9 +228,11 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
 
   const containsIndex = exportFiles.find(v => v.basenameNoExt === 'index')
 
+  const buildScriptFinal = buildExists ? `${relBuild} && ${buildScript}` : buildScript
+
   const extend = {
     scripts: {
-      build: buildExists ? `${relBuild} && ${buildScript}` : buildScript,
+      build: name === '' ? `npm run build --ws && ${buildScriptFinal}` : buildScriptFinal,
       test: testExists ? `${relTest} && ${testScript}` : testScript,
       ...(checkSrcFiles.length ? {'build:only': buildOnly} : {}),
       ...pkgRest,
