@@ -113,9 +113,9 @@ const scripts = {
   style: 'prettier --check .',
   'style:fix': 'prettier --write .',
   test: 'npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint',
-  'test:only': 'if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test ./test/**; fi',
+  'test:only': 'if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test test/**/*.test.ts; fi',
   'test:snap':
-    'if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test --test-update-snapshots ./test/**; fi',
+    'if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test --test-update-snapshots test/**/*.test.ts; fi',
   typecheck: 'tsc',
 }
 
@@ -163,7 +163,7 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
 
   const {tsup, ...devDeps} = packageJson.devDependencies
 
-  const extraFiles = await glob(srcFiles + '/*', {ignore: [srcFiles + '/*.ts'], nodir: true, absolute: true})
+  const extraFiles = (await fs.readdir(path.join(workspace, 'bins'))).map(file => path.join(workspace, 'bins', file))
 
   for (const file of extraFiles) {
     const content = await fs.readFile(file, 'utf8')
