@@ -17,7 +17,7 @@
   },
   "main": "dist/index.cjs",
   "bin": {
-    "dknevee": "src/dknevee",
+    "dknevee": "bins/dknevee",
     "knevee": "dist/bin.cjs"
   },
   "files": [
@@ -38,8 +38,8 @@
     "style": "prettier --check .",
     "style:fix": "prettier --write .",
     "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
-    "test:only": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test test/**/*.test.ts; fi",
-    "test:snap": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test --test-update-snapshots test/**/*.test.ts; fi",
+    "test:only": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test ./test/*.test.ts ./test/**/*.test.ts; fi",
+    "test:snap": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test-update-snapshots --test ./test/*.test.ts ./test/**/*.test.ts; fi",
     "typecheck": "tsc"
   },
   "prettier": "@github/prettier-config",

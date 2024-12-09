@@ -99,6 +99,13 @@ const getOriginRemote = (): string => {
   }
 }
 
+const MCR = (value?) =>
+  [
+    `mcr --import tsx tsx --experimental-test-snapshots`,
+    ...(value ? [value] : []),
+    `--test ./test/*.test.ts ./test/**/*.test.ts`,
+  ].join(' ')
+
 const scripts = {
   build: 'npm run build:only --if-present && npm run style:fix && npm run pkg:fix',
   'build:only': 'tsup --clean ./src/*.ts --format esm,cjs --dts',
@@ -113,9 +120,8 @@ const scripts = {
   style: 'prettier --check .',
   'style:fix': 'prettier --write .',
   test: 'npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint',
-  'test:only': 'if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test test/**/*.test.ts; fi',
-  'test:snap':
-    'if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test --test-update-snapshots test/**/*.test.ts; fi',
+  'test:only': `if [ -d ./test ]; then ${MCR()}; fi`,
+  'test:snap': `if [ -d ./test ]; then ${MCR('--test-update-snapshots')}; fi`,
   typecheck: 'tsc',
 }
 
@@ -163,8 +169,8 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
 
   const {tsup, ...devDeps} = packageJson.devDependencies
 
-  const extraFiles = await exists(path.join(workspace, 'bins'))
-    ? (await fs.readdir(path.join(workspace, 'bins'))).map(file => path.join(workspace, 'bins', file)) 
+  const extraFiles = (await exists(path.join(workspace, 'bins')))
+    ? (await fs.readdir(path.join(workspace, 'bins'))).map(file => path.join(workspace, 'bins', file))
     : []
 
   for (const file of extraFiles) {
