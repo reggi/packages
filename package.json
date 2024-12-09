@@ -16,7 +16,7 @@
     "workspaces/*"
   ],
   "scripts": {
-    "build": "npm run build --ws && src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm run build --ws",
+    "build": "npm run build:only --if-present --workspaces && src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm run build --ws",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
     "depcheck": "depcheck --ignores='tsup,sort-package-json'",

@@ -73,6 +73,14 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
           name: 'Install Node.js dependencies',
           run: 'npm ci --ignore-scripts',
         },
+        ...(!isRoot
+          ? [
+              {
+                name: 'Build source code',
+                run: 'npm run build:only --if-present --workspaces',
+              },
+            ]
+          : []),
         {
           name: 'Run build script',
           run: `npm run build ${isRoot ? '' : `-w=${name}`} --if-present`,
@@ -236,7 +244,7 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
 
   const extend = {
     scripts: {
-      build: name === '' ? `npm run build --ws && ${buildScriptFinal}` : buildScriptFinal,
+      build: name === '' ? `npm run build:only --if-present --workspaces && ${buildScriptFinal}` : buildScriptFinal,
       test: testExists ? `${relTest} && ${testScript}` : testScript,
       ...(checkSrcFiles.length ? {'build:only': buildOnly} : {}),
       ...pkgRest,

@@ -40,6 +40,8 @@ jobs:
             ${{ runner.os }}-node-
       - name: Install Node.js dependencies
         run: npm ci --ignore-scripts
+      - name: Build source code
+        run: npm run build:only --if-present --workspaces
       - name: Run build script
         run: npm run build -w=workspace-paths --if-present
       - name: Check if repo is porcelain
