@@ -112,9 +112,9 @@ const scripts = {
   report: 'open ./coverage/index.html',
   style: 'prettier --check .',
   'style:fix': 'prettier --write .',
-  test: 'npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint',
+  test: 'npm run test:only --if-present && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint',
   'test:only': 'mcr --import tsx tsx --experimental-test-snapshots --test ./test',
-  'test:snap': 'npm run test -- --test-update-snapshots',
+  'test:snap': 'npm run test --if-present -- --test-update-snapshots',
   typecheck: 'tsc',
 }
 
@@ -153,6 +153,7 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
     test: testScript,
     build: buildScript,
     'build:only': buildOnly,
+    'test:only': testOnly,
     ...pkgRest
   } = {
     ...scripts,
@@ -225,11 +226,14 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
 
   const buildScriptFinal = buildExists ? `${relBuild} && ${buildScript}` : buildScript
 
+  const checkTestDir = await exists(path.join(workspace, 'test'))
+
   const extend = {
     scripts: {
       build: name === '' ? `npm run build --ws && ${buildScriptFinal}` : buildScriptFinal,
       test: testExists ? `${relTest} && ${testScript}` : testScript,
       ...(checkSrcFiles.length ? {'build:only': buildOnly} : {}),
+      ...(checkTestDir ? {'test:only': testOnly} : {}),
       ...pkgRest,
     },
     ...(exports.length ? {exports: Object.fromEntries(exports)} : {}),

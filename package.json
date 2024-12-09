@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reggi/packages.git"
+    "url": "https://github.com/reggi/packages.git"
   },
   "license": "MIT",
   "author": "reggi <me@reggi.com> (https://reggi.com)",
@@ -27,9 +27,8 @@
     "report": "open ./coverage/index.html",
     "style": "prettier --check .",
     "style:fix": "prettier --write .",
-    "test": "src/test/index.ts && npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint && npm run test --ws",
-    "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test ./test",
-    "test:snap": "npm run test -- --test-update-snapshots",
+    "test": "src/test/index.ts && npm run test:only --if-present && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint && npm run test --ws",
+    "test:snap": "npm run test --if-present -- --test-update-snapshots",
     "typecheck": "tsc"
   },
   "prettier": "@github/prettier-config",

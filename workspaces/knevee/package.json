@@ -3,7 +3,7 @@
   "version": "4.4.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reggi/packages.git",
+    "url": "https://github.com/reggi/packages.git",
     "directory": "workspaces/knevee"
   },
   "license": "MIT",
@@ -37,9 +37,9 @@
     "report": "open ./coverage/index.html",
     "style": "prettier --check .",
     "style:fix": "prettier --write .",
-    "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
+    "test": "npm run test:only --if-present && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
     "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test ./test",
-    "test:snap": "npm run test -- --test-update-snapshots",
+    "test:snap": "npm run test --if-present -- --test-update-snapshots",
     "typecheck": "tsc"
   },
   "prettier": "@github/prettier-config",
