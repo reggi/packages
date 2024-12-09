@@ -46,11 +46,11 @@ jobs:
         run: npm run build -w=add-pkg-exports --if-present
       - name: Check if repo is porcelain
         run: |
-          if [[ -z $(git diff --name-only) ]]; then
+          if [[ -z $(git diff --name-only HEAD) ]]; then
             echo "The repository is clean."
           else
             echo "The repository has unstaged changes:"
-            git diff
+            git diff --name-only HEAD
             exit 1
           fi
       - name: Report results
