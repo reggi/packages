@@ -105,7 +105,7 @@ const getOriginRemote = (): string => {
 }
 
 const scripts = {
-  build: 'npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm pkg fix',
+  build: 'npm run build:only --if-present && npm run style:fix && npm run pkg:fix',
   'build:only': 'tsup --clean ./src/*.ts --format esm,cjs --dts',
   'build:test': 'npm run build && npm run test',
   'build:watch': 'npm run build:only -- --watch',
