@@ -1,4 +1,4 @@
-import test, {describe, before, after, it} from 'node:test'
+import {describe, before, after} from 'node:test'
 import {clearCache, rule, RULE} from '../src/unused.ts'
 import {plugin} from '../src/context/index.ts'
 import {defaultOptions} from '../src/utils/options.ts'
