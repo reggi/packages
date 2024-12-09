@@ -27,8 +27,9 @@
     "report": "open ./coverage/index.html",
     "style": "prettier --check .",
     "style:fix": "prettier --write .",
-    "test": "src/test/index.ts && npm run test:only --if-present && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint && npm run test --ws",
-    "test:snap": "npm run test --if-present -- --test-update-snapshots",
+    "test": "src/test/index.ts && npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint && npm run test --ws",
+    "test:only": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test ./test/**; fi",
+    "test:snap": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test --test-update-snapshots ./test/**; fi",
     "typecheck": "tsc"
   },
   "prettier": "@github/prettier-config",
