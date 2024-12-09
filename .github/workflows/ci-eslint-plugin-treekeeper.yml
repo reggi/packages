@@ -1,0 +1,55 @@
+name: ci-eslint-plugin-treekeeper
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+    paths:
+      - workspaces/eslint-plugin-treekeeper/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - workspaces/eslint-plugin-treekeeper/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 22.x
+        deno-version:
+          - 2.x
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: ${{ matrix.deno-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install Node.js dependencies
+        run: npm ci --ignore-scripts
+      - name: Run build script
+        run: npm run build -w=eslint-plugin-treekeeper --if-present
+      - name: Check if repo is porcelain
+        run: |
+          if [[ -z $(git diff --name-only) ]]; then
+            echo "The repository is clean."
+          else
+            echo "The repository has unstaged changes:"
+            git diff
+            exit 1
+          fi
+      - name: Report results
+        run: npm run test -w=eslint-plugin-treekeeper --if-present

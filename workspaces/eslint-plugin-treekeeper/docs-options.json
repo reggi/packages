@@ -1,0 +1,44 @@
+[
+  {
+    "name": "files",
+    "type": "string[]",
+    "description": "An array of file paths to include.",
+    "default": ["src/**/*.ts", "test/**/*.test.ts"]
+  },
+  {
+    "name": "ignores",
+    "type": "string[]",
+    "description": "An array of file paths to ignore.",
+    "default": ["dist/**", "coverage/**"]
+  },
+  {
+    "name": "index",
+    "type": "string",
+    "description": "The name of the \"prototypical\" index file, can be anything.",
+    "default": "index"
+  },
+  {
+    "name": "utils",
+    "type": "string",
+    "description": "The name of the shared \"utils\" directory in \"src\".",
+    "default": "utils"
+  },
+  {
+    "name": "src",
+    "type": "string",
+    "description": "The name of the \"src\" directory.",
+    "default": "src"
+  },
+  {
+    "name": "test",
+    "type": "string",
+    "description": "The name of the \"test\" directory.",
+    "default": "test"
+  },
+  {
+    "name": "limit",
+    "type": "number",
+    "description": "The dir nest limit.",
+    "default": 3
+  }
+]

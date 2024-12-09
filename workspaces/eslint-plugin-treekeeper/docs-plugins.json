@@ -1,0 +1,38 @@
+[
+  {
+    "name": "dir-nest-limit",
+    "description": "Enforces a limit on the number of nested directories within a project."
+  },
+  {
+    "name": "enforce-has-index",
+    "description": "Requires every module to include an index file."
+  },
+  {
+    "name": "enforce-test-in-src",
+    "description": "Ensures each test file has a corresponding source file in the 'src' directory."
+  },
+  {
+    "name": "no-root-import",
+    "description": "Prevents modules from importing files at the root level."
+  },
+  {
+    "name": "suggest-move-in-utils",
+    "description": "Checks for files being imported from multiple directories and suggests moving them to an agnostic \"utils\" directory."
+  },
+  {
+    "name": "suggest-move-out-utils",
+    "description": "Requires utils used by only one module to be relocated to that module."
+  },
+  {
+    "name": "unused",
+    "description": "Lists all unused files in the project."
+  },
+  {
+    "name": "utils-no-import-index",
+    "description": "Prevents importing index for utils files."
+  },
+  {
+    "name": "utils-no-import",
+    "description": "Prevents local imports for utils files."
+  }
+]

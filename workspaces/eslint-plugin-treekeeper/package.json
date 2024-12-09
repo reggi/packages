@@ -1,0 +1,112 @@
+{
+  "name": "eslint-plugin-treekeeper",
+  "version": "1.1.0",
+  "keywords": [
+    "eslint",
+    "plugin",
+    "typescript",
+    "structure",
+    "tree-lint"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reggi/packages",
+    "directory": "workspaces/eslint-plugin-treekeeper"
+  },
+  "license": "MIT",
+  "author": "reggi <me@reggi.com> (https://reggi.com)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./dir-nest-limit": {
+      "import": "./dist/dir-nest-limit.js",
+      "require": "./dist/dir-nest-limit.cjs"
+    },
+    "./enforce-has-index": {
+      "import": "./dist/enforce-has-index.js",
+      "require": "./dist/enforce-has-index.cjs"
+    },
+    "./enforce-test-in-src": {
+      "import": "./dist/enforce-test-in-src.js",
+      "require": "./dist/enforce-test-in-src.cjs"
+    },
+    "./no-root-import": {
+      "import": "./dist/no-root-import.js",
+      "require": "./dist/no-root-import.cjs"
+    },
+    "./suggest-move-in-utils": {
+      "import": "./dist/suggest-move-in-utils.js",
+      "require": "./dist/suggest-move-in-utils.cjs"
+    },
+    "./suggest-move-out-utils": {
+      "import": "./dist/suggest-move-out-utils.js",
+      "require": "./dist/suggest-move-out-utils.cjs"
+    },
+    "./unused": {
+      "import": "./dist/unused.js",
+      "require": "./dist/unused.cjs"
+    },
+    "./utils-no-import": {
+      "import": "./dist/utils-no-import.js",
+      "require": "./dist/utils-no-import.cjs"
+    },
+    "./utils-no-import-index": {
+      "import": "./dist/utils-no-import-index.js",
+      "require": "./dist/utils-no-import-index.cjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "npm run build:only --if-present && npm run style:fix && npm run pkg:fix",
+    "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
+    "build:test": "npm run build && npm run test",
+    "build:watch": "npm run build:only -- --watch",
+    "depcheck": "depcheck --ignores='tsup,sort-package-json'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pkg": "sort-package-json --check",
+    "pkg:fix": "sort-package-json",
+    "report": "open ./coverage/index.html",
+    "style": "prettier --check .",
+    "style:fix": "prettier --write .",
+    "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
+    "test:only": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test ./test/*.test.ts ./test/**/*.test.ts; fi",
+    "test:snap": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test-update-snapshots --test ./test/*.test.ts ./test/**/*.test.ts; fi",
+    "typecheck": "tsc"
+  },
+  "prettier": "@github/prettier-config",
+  "dependencies": {
+    "@typescript-eslint/utils": "^8.17.0",
+    "glob": "^11.0.0",
+    "minimatch": "^10.0.1",
+    "typescript": "^5.6.3"
+  },
+  "devDependencies": {
+    "@github/prettier-config": "^0.0.6",
+    "@types/node": "^22.9.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "@typescript-eslint/types": "^8.15.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.15.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-node-specifier": "^1.0.2",
+    "eslint-plugin-treekeeper": "^1.1.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "mock-fs": "^5.4.1",
+    "monocart-coverage-reports": "^2.11.2",
+    "prettier": "^3.2.5",
+    "sort-package-json": "^2.10.1",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  },
+  "coverage": 90
+}
