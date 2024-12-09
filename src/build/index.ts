@@ -10,11 +10,11 @@ import {glob} from 'glob'
 
 const porcelainCheck =
   `
-if [[ -z $(git diff --name-only) ]]; then
+if [[ -z $(git diff --name-only HEAD) ]]; then
   echo "The repository is clean."
 else
   echo "The repository has unstaged changes:"
-  git diff
+  git diff --name-only HEAD
   exit 1
 fi
 `.trim() + '\n'
@@ -345,6 +345,6 @@ await fs.writeFile(
 await fs.writeFile(
   path.join(process.cwd(), 'README.md'),
   [`# packages`, 'This is a monorepo managed by release-please for my personal npm packages.', json2md(readme)].join(
-    '\n',
-  ),
+    '\n\n',
+  ) + '\n',
 )
