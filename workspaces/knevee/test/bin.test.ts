@@ -66,36 +66,36 @@ export const invalid = (name: string, commands: string[]) =>
     })
   })
 
-function runBin (bin) {
+function runBin(bin) {
   describe(bin, async () => {
     await invalid('throws on depcheck failure', [
       `${bin} ./examples/dep-check-invalid.ts tea 32`, // dep-check
     ])
-    
+
     await valid('valid stdout', [
       `${bin} ./examples stdin-uppercase woof`,
       `${bin} ./examples/stdin-uppercase.ts woof`,
       './examples/stdin-uppercase.ts woof',
     ])
-    
+
     await valid('vaid stdin', [
       withStdin(`${bin} ./examples stdin-uppercase`, ['meow', 'woof']),
       withStdin(`${bin} ./examples/stdin-uppercase.ts`, ['meow', 'woof']),
       withStdin('./examples/stdin-uppercase.ts', ['meow', 'woof']),
     ])
-    
+
     // dir list example
     await valid('dir list no index', [`${bin} ./examples/no-index`])
-    
+
     // help example
     await valid('show knevee help', [`${bin} --help`])
-    
+
     // no target
     await invalid('no knevee target', [`${bin}`])
-    
+
     // no command found
     await invalid('no command found', [`${bin} ./examples/empty-dir`])
-    
+
     // subcommand match
     await valid('subcommand match', [
       `${bin} ./examples/no-index`,
@@ -103,25 +103,22 @@ function runBin (bin) {
       `${bin} --cwd=examples/no-index`,
       `${bin} --cwd=examples/no-index xxx`,
     ])
-    
+
     // UserError
-    await invalid('user error', [
-      `${bin} ./examples/throws.ts xxx 111`,
-      'tsx ./examples/throws-functional.ts xxx 111',
-    ])
-    
+    await invalid('user error', [`${bin} ./examples/throws.ts xxx 111`, 'tsx ./examples/throws-functional.ts xxx 111'])
+
     // knevee error
     await invalid('knevee error', [`KNEVEE_THROW=true ${bin} ./examples/exports.ts`])
-    
+
     // knevee error
     await invalid('knevee error', [`KNEVEE_THROW=true ${bin} ./examples/empty.ts`])
-    
+
     await valid('command help', [
       `${bin} ./examples functional --help`,
       `${bin} ./examples/functional.ts --help`,
       './examples/functional.ts --help',
     ])
-    
+
     // normal kneve error
     await invalid('command arg error', [
       // ----- esm -----
@@ -168,7 +165,7 @@ function runBin (bin) {
       'tsx ./examples/functional-cjs.cjs tea', // extra functional call
       './examples/functional-cjs.cjs tea',
     ])
-    
+
     await valid('successful command', [
       // ----- esm -----
       // command
@@ -213,7 +210,7 @@ function runBin (bin) {
       `${bin} ./examples/functional-cjs.cjs tea 32`,
       'tsx ./examples/functional-cjs.cjs tea 32', // extra functional call
       './examples/functional-cjs.cjs tea 32',
-    ])  
+    ])
   })
 }
 
