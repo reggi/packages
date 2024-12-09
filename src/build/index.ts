@@ -93,6 +93,7 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
           name: 'Report results',
           run: `npm run test ${isRoot ? '' : `-w=${name}`} --if-present`,
         },
+        ...(isRoot ? [] : [{name: 'Run workspace', run: `./src/test/index.ts --workspace=${name}`}]),
       ],
     },
   },
@@ -158,14 +159,9 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
   const build = path.join(workspace, relBuild)
   const buildExists = await exists(build)
 
-  const relTest = path.join('src', 'test', 'index.ts')
-  const test = path.join(workspace, relTest)
-  const testExists = await exists(test)
-
   const srcFiles = path.join(workspace, 'src')
   const checkSrcFiles = await glob(srcFiles + '/*.ts', {absolute: true, nodir: true})
   const {
-    test: testScript,
     build: buildScript,
     'build:only': buildOnly,
     ...pkgRest
@@ -253,7 +249,6 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
   const extend = {
     scripts: {
       build: name === '' ? `npm run build:only --if-present --workspaces && ${buildScriptFinal}` : buildScriptFinal,
-      test: testExists ? `${relTest} && ${testScript}` : testScript,
       ...(checkSrcFiles.length ? {'build:only': buildOnly} : {}),
       ...pkgRest,
     },

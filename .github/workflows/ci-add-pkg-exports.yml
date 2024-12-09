@@ -55,3 +55,5 @@ jobs:
           fi
       - name: Report results
         run: npm run test -w=add-pkg-exports --if-present
+      - name: Run workspace
+        run: ./src/test/index.ts --workspace=add-pkg-exports

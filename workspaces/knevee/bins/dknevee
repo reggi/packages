@@ -24,7 +24,7 @@ if [ ${#RUNTIME_ARRAY[@]} -eq 0 ]; then
 fi
 
 # Adjust the path to point directly to your actual script, ensure this path is correct
-MAIN_SCRIPT="$DIR/dist/bin.cjs" # Modify this according to your actual file location
+MAIN_SCRIPT="$DIR/../dist/bin.cjs" # Modify this according to your actual file location
 
 # Execute the CLI script with the selected runtime and pass all additional CLI arguments
 exec "${RUNTIME_ARRAY[@]}" "$MAIN_SCRIPT" "$@"
