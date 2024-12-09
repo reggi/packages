@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/reggi/packages.git"
+    "url": "git+https://github.com/reggi/packages.git"
   },
   "license": "MIT",
   "author": "reggi <me@reggi.com> (https://reggi.com)",
@@ -16,7 +16,7 @@
     "workspaces/*"
   ],
   "scripts": {
-    "build": "npm run build --ws && src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm pkg fix && npm run build --ws",
+    "build": "npm run build --ws && src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm run build --ws",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
     "depcheck": "depcheck --ignores='sort-package-json'",

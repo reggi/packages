@@ -90,14 +90,9 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
   },
 })
 
-const convertGitUrl = url => {
-  return url.replace(':', '/').replace('git@', 'git+ssh://git@')
-}
-
 const getOriginRemote = (): string => {
   try {
-    const remoteUrl = execSync('git config --get remote.origin.url').toString().trim()
-    return convertGitUrl(remoteUrl)
+    return execSync('git config --get remote.origin.url').toString().trim()
   } catch (error) {
     console.error('Error getting origin remote URL:', error)
     process.exit(1)

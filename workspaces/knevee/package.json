@@ -3,7 +3,7 @@
   "version": "4.4.0",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/reggi/packages.git",
+    "url": "git+https://github.com/reggi/packages.git",
     "directory": "workspaces/knevee"
   },
   "license": "MIT",
@@ -25,7 +25,7 @@
     "src/"
   ],
   "scripts": {
-    "build": "src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm pkg fix",
+    "build": "src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix",
     "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
