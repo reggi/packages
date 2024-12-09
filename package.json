@@ -16,8 +16,7 @@
     "workspaces/*"
   ],
   "scripts": {
-    "build": "src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm pkg fix",
-    "build-all": "npm run build --ws --include-workspace-root",
+    "build": "src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm pkg fix && npm run build --ws",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
     "depcheck": "depcheck --ignores='sort-package-json'",
@@ -28,8 +27,7 @@
     "report": "open ./coverage/index.html",
     "style": "prettier --check .",
     "style:fix": "prettier --write .",
-    "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
-    "test-all": "npm run test --ws",
+    "test": "src/test/index.ts && npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint && npm run test --ws",
     "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test ./test",
     "test:snap": "npm run test -- --test-update-snapshots",
     "typecheck": "tsc"

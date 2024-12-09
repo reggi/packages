@@ -25,11 +25,11 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
     workflow_dispatch: {},
     push: {
       branches: ['main'],
-      paths: isRoot ? ['/*'] : [`workspaces/${name}/**`],
+      paths: isRoot ? ['/**'] : [`workspaces/${name}/**`],
     },
     pull_request: {
       branches: ['main'],
-      paths: isRoot ? ['/*'] : [`workspaces/${name}/**`],
+      paths: isRoot ? ['/**'] : [`workspaces/${name}/**`],
     },
   },
   jobs: {
@@ -124,8 +124,8 @@ const scripts = {
 }
 
 const rootScripts = {
-  'build-all': 'npm run build --ws --include-workspace-root',
-  'test-all': 'npm run test --ws',
+  build: `${scripts.build} && npm run build --ws`,
+  test: `${scripts.test} && npm run test --ws`,
 }
 
 const rootJson = JSON.parse(await fs.readFile(path.join(process.cwd(), 'package.json'), 'utf8'))
@@ -143,12 +143,26 @@ const exists = async (filePath: string) => {
 const updatePackageJson = async (name: string, workspace: string, repositoryUrl: string) => {
   const packageJsonPath = path.join(workspace, 'package.json')
   const packageJsonContent = await fs.readFile(packageJsonPath, 'utf8')
+
   const relBuild = path.join('src', 'build', 'index.ts')
   const build = path.join(workspace, relBuild)
   const buildExists = await exists(build)
+
+  const relTest = path.join('src', 'test', 'index.ts')
+  const test = path.join(workspace, relTest)
+  const testExists = await exists(test)
+
   const srcFiles = path.join(workspace, 'src')
   const checkSrcFiles = await glob(srcFiles + '/*.ts', {absolute: true, nodir: true})
-  const {build: buildScript, 'build:only': buildOnly, ...pkgRest} = scripts
+  const {
+    test: testScript,
+    build: buildScript,
+    'build:only': buildOnly,
+    ...pkgRest
+  } = {
+    ...scripts,
+    ...(name == '' ? rootScripts : {}),
+  }
   const packageJson = JSON.parse(packageJsonContent)
 
   const {tsup, ...devDeps} = packageJson.devDependencies
@@ -217,9 +231,9 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
   const extend = {
     scripts: {
       build: buildExists ? `${relBuild} && ${buildScript}` : buildScript,
+      test: testExists ? `${relTest} && ${testScript}` : testScript,
       ...(checkSrcFiles.length ? {'build:only': buildOnly} : {}),
       ...pkgRest,
-      ...(name == '' ? rootScripts : {}),
     },
     ...(exports.length ? {exports: Object.fromEntries(exports)} : {}),
     ...(bin.length ? {bin: Object.fromEntries(bin)} : {}),
