@@ -35,6 +35,7 @@
   "prettier": "@github/prettier-config",
   "dependencies": {
     "@types/yaml": "^1.9.6",
+    "glob": "^11.0.0",
     "workspace-paths": "^1.0.0",
     "yaml": "^2.6.1"
   },
