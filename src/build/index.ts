@@ -25,11 +25,11 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
     workflow_dispatch: {},
     push: {
       branches: ['main'],
-      paths: isRoot ? ['/**'] : [`workspaces/${name}/**`],
+      ...(isRoot ? {} : {paths: [`workspaces/${name}/**`]}),
     },
     pull_request: {
       branches: ['main'],
-      paths: isRoot ? ['/**'] : [`workspaces/${name}/**`],
+      ...(isRoot ? {} : {paths: [`workspaces/${name}/**`]}),
     },
   },
   jobs: {
