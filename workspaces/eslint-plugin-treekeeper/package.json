@@ -98,7 +98,6 @@
     "eslint": "^9.15.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-node-specifier": "^1.0.2",
-    "eslint-plugin-treekeeper": "^1.1.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "mock-fs": "^5.4.1",
     "monocart-coverage-reports": "^2.11.2",

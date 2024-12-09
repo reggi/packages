@@ -242,6 +242,14 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
 
   const buildScriptFinal = buildExists ? `${relBuild} && ${buildScript}` : buildScript
 
+  const devDependencies = {
+    ...sharedDevDependencies,
+    ...devDeps,
+    ...(checkSrcFiles.length ? {tsup} : {}),
+  }
+
+  delete devDependencies[name]
+
   const extend = {
     scripts: {
       build: name === '' ? `npm run build:only --if-present --workspaces && ${buildScriptFinal}` : buildScriptFinal,
@@ -261,11 +269,7 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
     },
     license: 'MIT',
     author: 'reggi <me@reggi.com> (https://reggi.com)',
-    devDependencies: {
-      ...sharedDevDependencies,
-      ...devDeps,
-      ...(checkSrcFiles.length ? {tsup} : {}),
-    },
+    devDependencies,
   }
   await fs.writeFile(packageJsonPath, JSON.stringify({...packageJson, ...extend}, null, 2) + '\n')
   return packageJson
@@ -297,7 +301,13 @@ for (const workspace of workspaces) {
   await fs.writeFile(path.join(process.cwd(), '.github', 'workflows', filename), content)
 
   for (const {basename, content} of readRoot) {
-    await fs.writeFile(path.join(workspace, basename), content)
+    let swapContent = content
+    if (name === 'eslint-plugin-treekeeper' && basename === 'eslint.config.js') {
+      const find = `import {recommended} from 'eslint-plugin-treekeeper'`
+      const replace = `import {recommended} from './dist/index.cjs'`
+      swapContent = content.replace(find, replace)
+    }
+    await fs.writeFile(path.join(workspace, basename), swapContent)
   }
 
   const {version, name: pkgName} = await updatePackageJson(name, workspace, repositoryUrl)
