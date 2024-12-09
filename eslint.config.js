@@ -7,7 +7,7 @@ import unusedImports from 'eslint-plugin-unused-imports'
 
 const shared = {
   files: ['src/**/*.ts', 'test/**/*.test.ts'],
-  ignores: ['dist/**', 'coverage/**'],
+  ignores: ['dist/**', 'coverage/**', 'workspaces/**'],
 }
 
 /** @type {import('eslint').Linter.Config[]} */

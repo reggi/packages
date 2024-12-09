@@ -30,7 +30,7 @@
     "style:fix": "prettier --write .",
     "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
     "test-all": "npm run test --ws",
-    "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test",
+    "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test ./test",
     "test:snap": "npm run test -- --test-update-snapshots",
     "typecheck": "tsc"
   },

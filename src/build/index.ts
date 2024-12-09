@@ -118,7 +118,7 @@ const scripts = {
   style: 'prettier --check .',
   'style:fix': 'prettier --write .',
   test: 'npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint',
-  'test:only': 'mcr --import tsx tsx --experimental-test-snapshots --test',
+  'test:only': 'mcr --import tsx tsx --experimental-test-snapshots --test ./test',
   'test:snap': 'npm run test -- --test-update-snapshots',
   typecheck: 'tsc',
 }
@@ -147,11 +147,72 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
   const build = path.join(workspace, relBuild)
   const buildExists = await exists(build)
   const srcFiles = path.join(workspace, 'src')
-  const checkSrcFiles = await glob(srcFiles + '/*.ts')
+  const checkSrcFiles = await glob(srcFiles + '/*.ts', {absolute: true, nodir: true})
   const {build: buildScript, 'build:only': buildOnly, ...pkgRest} = scripts
   const packageJson = JSON.parse(packageJsonContent)
 
   const {tsup, ...devDeps} = packageJson.devDependencies
+
+  const extraFiles = await glob(srcFiles + '/*', {ignore: [srcFiles + '/*.ts'], nodir: true, absolute: true})
+
+  for (const file of extraFiles) {
+    const content = await fs.readFile(file, 'utf8')
+    const firstLine = content.split('\n')[0]
+    const hasShebang = firstLine.startsWith('#!')
+    if (!hasShebang) {
+      throw new Error(`non js file in src without shebang`)
+    }
+  }
+
+  const readFiles = await Promise.all(
+    checkSrcFiles.map(async file => {
+      const content = await fs.readFile(file, 'utf8')
+      const firstLine = content.split('\n')[0]
+      const hasShebang = firstLine.startsWith('#!')
+      const basename = path.basename(file)
+      const ext = path.extname(basename)
+      const basenameNoExt = path.basename(file, ext)
+      const distFile = path.relative(workspace, file).replace('src', 'dist')
+      const cjsFile = distFile.replace('.ts', '.cjs')
+      const jsFile = distFile.replace('.ts', '.js')
+      const exportKey = basenameNoExt === 'index' ? '.' : `./${basenameNoExt}`
+      return {file, cjsFile, jsFile, basenameNoExt, hasShebang, exportKey}
+    }),
+  )
+  const binFiles = readFiles.filter(v => v.hasShebang)
+  const exportFiles = readFiles.filter(v => !v.hasShebang)
+
+  for (const {file} of binFiles) {
+    await fs.chmod(file, 0o755)
+  }
+
+  const bin = binFiles
+    .map(v => {
+      const name: string = v.basenameNoExt === 'bin' ? packageJson.name : v.basenameNoExt
+      return [name, v.cjsFile]
+    })
+    .sort((a, b) => a[0].localeCompare(b[0]))
+
+  bin.push(
+    ...extraFiles.map(file => {
+      const name = path.basename(file)
+      return [name, path.relative(workspace, file)]
+    }),
+  )
+
+  const exports = exportFiles
+    .map(v => {
+      const name: string = v.exportKey
+      const value = {
+        import: `./${v.jsFile}`,
+        require: `./${v.cjsFile}`,
+      }
+      const result: [string, {require: string; import: string}] = [name, value]
+      return result
+    })
+    .sort((a, b) => a[0].localeCompare(b[0]))
+
+  const containsIndex = exportFiles.find(v => v.basenameNoExt === 'index')
 
   const extend = {
     scripts: {
@@ -160,6 +221,9 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
       ...pkgRest,
       ...(name == '' ? rootScripts : {}),
     },
+    ...(exports.length ? {exports: Object.fromEntries(exports)} : {}),
+    ...(bin.length ? {bin: Object.fromEntries(bin)} : {}),
+    ...(containsIndex ? {main: containsIndex.cjsFile} : {}),
     files: ['dist/', 'src/'],
     prettier: '@github/prettier-config',
     repository: {

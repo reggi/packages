@@ -19,13 +19,13 @@
   "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.cjs",
+  "main": "dist/index.cjs",
   "bin": {
-    "workspace-paths": "dist/bin.js"
+    "workspace-paths": "dist/bin.cjs"
   },
   "files": [
     "dist/",
@@ -45,7 +45,7 @@
     "style": "prettier --check .",
     "style:fix": "prettier --write .",
     "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
-    "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test",
+    "test:only": "mcr --import tsx tsx --experimental-test-snapshots --test ./test",
     "test:snap": "npm run test -- --test-update-snapshots",
     "typecheck": "tsc"
   },

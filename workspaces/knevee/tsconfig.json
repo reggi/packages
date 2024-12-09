@@ -14,5 +14,5 @@
     "noEmit": true,
     "resolveJsonModule": true
   },
-  "ignore": ["node_modules", "dist", "coverage"]
+  "ignore": ["node_modules", "dist", "coverage", "workspaces"]
 }
