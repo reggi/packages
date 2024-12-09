@@ -111,7 +111,7 @@ const scripts = {
   'build:only': 'tsup --clean ./src/*.ts --format esm,cjs --dts',
   'build:test': 'npm run build && npm run test',
   'build:watch': 'npm run build:only -- --watch',
-  depcheck: "depcheck --ignores='sort-package-json'",
+  depcheck: "depcheck --ignores='tsup,sort-package-json'",
   lint: 'eslint .',
   'lint:fix': 'eslint . --fix',
   pkg: 'sort-package-json --check',
