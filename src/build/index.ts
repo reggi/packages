@@ -275,7 +275,7 @@ const repositoryUrl = getOriginRemote()
 
 const manifest: [string, string][] = []
 const packages: [string, object][] = []
-const readme: {name: string; version: string; url: string}[] = []
+const readme: {name: string; url: string}[] = []
 
 const copyFromRoot = ['eslint.config.js', 'mcr.config.js', 'tsconfig.json', '.prettierignore', '.gitignore']
 
@@ -311,7 +311,6 @@ for (const workspace of workspaces) {
     packages.push([`workspaces/${name}`, {}])
     readme.push({
       name: `[${name}](./workspaces/${name}/README.md)`,
-      version,
       url: `https://www.npmjs.com/package/${pkgName}`,
     })
   }
