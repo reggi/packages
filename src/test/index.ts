@@ -12,63 +12,60 @@ const runtimes = {
 import path from 'node:path'
 import fs from 'node:fs/promises'
 import {workspacePaths} from 'workspace-paths'
-import {execSync} from 'node:child_process'
+import {exec} from 'node:child_process'
+import util from 'node:util'
+
+const execAsync = util.promisify(exec)
 
 const workspaces = await workspacePaths({cwd: process.cwd(), includeRoot: true})
 
-for (const workspace of workspaces) {
-  const packageJsonPath = path.join(workspace, 'package.json')
-  const {main, exports, bin} = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
-  const files = [main, ...Object.values(exports || {}).flatMap((v: any) => Object.values(v))]
-    .filter(Boolean)
-    .map((file: string) => {
+const execCommands = async (commands: string[]) => {
+  await Promise.all(
+    commands.map(async command => {
+      try {
+        await execAsync(command)
+      } catch (error) {
+        throw new Error(`Error executing ${command}: ${error.message}`)
+      }
+    }),
+  )
+}
+
+// Parallelize workspace processing
+await Promise.all(
+  workspaces.map(async workspace => {
+    const packageJsonPath = path.join(workspace, 'package.json')
+    const {main, exports, bin} = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'))
+
+    const files = [main, ...Object.values(exports || {}).flatMap((v: any) => Object.values(v))]
+      .filter(Boolean)
+      .map((file: string) => {
+        const dist = path.join(workspace, file)
+        const src = path.join(workspace, file.replace('dist', 'src').replace('.cjs', '.ts').replace('.js', '.ts'))
+        return {dist, src}
+      })
+
+    // Run file checks in parallel
+    await Promise.all(
+      files.map(async ({dist, src}) => {
+        await execCommands(runtimes.src.map(runtime => `${runtime} ${src}`))
+        await execCommands(runtimes.dist.map(runtime => `${runtime} ${dist}`))
+      }),
+    )
+
+    const bins = [...Object.values(bin || {})].filter(Boolean).map((file: string) => {
       const dist = path.join(workspace, file)
       const src = path.join(workspace, file.replace('dist', 'src').replace('.cjs', '.ts').replace('.js', '.ts'))
       return {dist, src}
     })
 
-  for (const {dist, src} of files) {
-    for (const runtime of runtimes.src) {
-      try {
-        execSync(`${runtime} ${src}`)
-      } catch (error) {
-        throw new Error(`Error executing ${runtime} ${src}: ${error.message}`)
-      }
-    }
-    for (const runtime of runtimes.dist) {
-      try {
-        execSync(`${runtime} ${dist}`)
-      } catch (error) {
-        throw new Error(`Error executing ${runtime} ${dist}: ${error.message}`)
-      }
-    }
-  }
-
-  const bins = [...Object.values(bin || {})]
-    .filter(Boolean)
-    .map((file: string) => {
-      const ext = path.extname(file)
-      const dist = path.join(workspace, file)
-      const src = path.join(workspace, file.replace('dist', 'src').replace('.cjs', '.ts').replace('.js', '.ts'))
-      return {ext, dist, src}
-    })
-    .filter(({ext}) => ext)
-
-  for (const {dist, src} of bins) {
-    for (const runtime of runtimes.src) {
-      try {
-        execSync(`${runtime} ${src} --help`)
-      } catch (error) {
-        throw new Error(`Error executing ${runtime} ${src}: ${error.message}`)
-      }
-    }
-    execSync(`${dist} --help`)
-    for (const runtime of runtimes.dist) {
-      try {
-        execSync(`${runtime} ${dist} --help`)
-      } catch (error) {
-        throw new Error(`Error executing ${runtime} ${dist}: ${error.message}`)
-      }
-    }
-  }
-}
+    // Run bin checks in parallel
+    await Promise.all(
+      bins.map(async ({dist, src}) => {
+        await execCommands(runtimes.src.map(runtime => `${runtime} ${src} --help`))
+        await execAsync(`${dist} --help`)
+        await execCommands(runtimes.dist.map(runtime => `${runtime} ${dist} --help`))
+      }),
+    )
+  }),
+)
