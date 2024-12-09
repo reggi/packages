@@ -135,7 +135,7 @@ const scripts = {
 
 const rootScripts = {
   build: `${scripts.build} && npm run build --ws`,
-  test: `${scripts.test} && npm run test --ws`,
+  test: `${scripts.test}`,
 }
 
 const rootJson = JSON.parse(await fs.readFile(path.join(process.cwd(), 'package.json'), 'utf8'))
