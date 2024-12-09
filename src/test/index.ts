@@ -98,5 +98,9 @@ if (values.workspaces) {
     }),
   )
 } else if (values.workspace) {
-  await runWorkspace(values.workspace)
+  const ws = workspaces.find(workspace => path.basename(workspace) === values.workspace)
+  if (!ws) {
+    throw new Error(`Workspace ${values.workspace} not found`)
+  }
+  await runWorkspace(ws)
 }
