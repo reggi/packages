@@ -9,15 +9,18 @@ export class Context extends Path {
   filename: string
   options: Options
   indexFile: string
+  plugin: string
+  rule: string
+  defaultOptions: Options
+
   constructor(
     context: {filename: string; settings?: Record<string, any>; cwd: string; options: any[]},
-    public plugin: string,
-    public rule: string,
-    public defaultOptions: Options,
+    plugin: string,
+    rule: string,
+    defaultOptions: Options,
   ) {
     const filename = context.filename
     const cwd = context.cwd
-    const relative = path.relative(cwd, filename)
     const ext = path.extname(filename)
     const pluginSettings = context?.settings?.[`${plugin}`] || {}
     const ruleSettings = context?.settings?.[`${plugin}/${rule}`] || {}
@@ -27,6 +30,9 @@ export class Context extends Path {
     this.filename = filename
     this.options = options
     this.indexFile = options.index + ext
+    this.plugin = plugin
+    this.rule = rule
+    this.defaultOptions = defaultOptions
   }
   projectFiles() {
     return Paths.fromSync({options: this.options, ext: this.ext, cwd: this.cwd, parent: this})
