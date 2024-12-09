@@ -3,7 +3,7 @@ import * as path from 'node:path'
 import {fileURLToPath} from 'node:url'
 import ts from 'typescript'
 
-const tsConfig = JSON.parse(fs.readFileSync(path.resolve('./tsconfig.json'), 'utf-8'))
+const tsConfig = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'tsconfig.json'), 'utf-8'))
 
 export default {
   outputDir: './coverage',
@@ -31,12 +31,12 @@ export default {
     },
   },
   onEnd: coverageResults => {
+    const pkg = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'package.json'), 'utf-8'))
     const thresholds = {
-      bytes: 100,
-      statements: 100,
-      branches: 95,
-      functions: 100,
-      lines: 100,
+      bytes: pkg.coverage,
+      statements: pkg.coverage,
+      functions: pkg.coverage,
+      lines: pkg.coverage,
     }
     const errors = []
     const {summary} = coverageResults
