@@ -36,5 +36,6 @@
     "workspaces/workspace-paths": {}
   },
   "prerelease": true,
-  "prereleaseType": "pre"
+  "prereleaseType": "pre",
+  "versioning-strategy": "prerelease"
 }
