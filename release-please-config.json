@@ -35,5 +35,6 @@
     "workspaces/knevee": {},
     "workspaces/workspace-paths": {}
   },
-  "prerelease": true
+  "prerelease": true,
+  "prereleaseType": "pre"
 }
