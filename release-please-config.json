@@ -34,5 +34,6 @@
     "workspaces/eslint-plugin-treekeeper": {},
     "workspaces/knevee": {},
     "workspaces/workspace-paths": {}
-  }
+  },
+  "prerelease": true
 }
