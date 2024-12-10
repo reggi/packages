@@ -93,7 +93,7 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
           name: 'Report results',
           run: `npm run test ${isRoot ? '' : `-w=${name}`} --if-present`,
         },
-        ...(isRoot ? [] : [{name: 'Run workspace', run: `./src/test/index.ts --workspace=${name}`}]),
+        ...(isRoot ? [] : [{name: 'Run workspace', run: `./src/test/index.ts --workspace=workspaces/${name}`}]),
       ],
     },
   },

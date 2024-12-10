@@ -56,4 +56,4 @@ jobs:
       - name: Report results
         run: npm run test -w=eslint-plugin-treekeeper --if-present
       - name: Run workspace
-        run: ./src/test/index.ts --workspace=eslint-plugin-treekeeper
+        run: ./src/test/index.ts --workspace=workspaces/eslint-plugin-treekeeper
