@@ -1,0 +1,59 @@
+name: ci-example
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+    paths:
+      - workspaces/example/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - workspaces/example/**
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 22.x
+        deno-version:
+          - 2.x
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: ${{ matrix.deno-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install Node.js dependencies
+        run: npm ci --ignore-scripts
+      - name: Build source code
+        run: npm run build:only --if-present --workspaces
+      - name: Run build script
+        run: npm run build -w=example --if-present
+      - name: Check if repo is porcelain
+        run: |
+          if [[ -z $(git diff --name-only HEAD) ]]; then
+            echo "The repository is clean."
+          else
+            echo "The repository has unstaged changes:"
+            git diff --name-only HEAD
+            exit 1
+          fi
+      - name: Report results
+        run: npm run test -w=example --if-present
+      - name: Run workspace
+        run: ./src/test/index.ts --workspace=example

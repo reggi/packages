@@ -171,7 +171,7 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
   }
   const packageJson = JSON.parse(packageJsonContent)
 
-  const {tsup, ...devDeps} = packageJson.devDependencies
+  const {tsup, ...devDeps} = packageJson?.devDependencies || {}
 
   const extraFiles = (await exists(path.join(workspace, 'bins')))
     ? (await fs.readdir(path.join(workspace, 'bins'))).map(file => path.join(workspace, 'bins', file))

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reggi/packages"
+    "url": "https://github.com/reggi/packages.git"
   },
   "license": "MIT",
   "author": "reggi <me@reggi.com> (https://reggi.com)",

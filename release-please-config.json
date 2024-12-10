@@ -32,11 +32,11 @@
   "packages": {
     "workspaces/add-pkg-exports": {},
     "workspaces/eslint-plugin-treekeeper": {},
-    "workspaces/knevee": {},
-    "workspaces/workspace-paths": {},
     "workspaces/example": {},
+    "workspaces/knevee": {},
+    "workspaces/workspace-paths": {}
   },
   "prerelease": true,
-  "prereleaseType": "pre",
+  "prerelease-type": "pre",
   "versioning-strategy": "prerelease"
 }
