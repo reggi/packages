@@ -1,6 +1,6 @@
 {
   "name": "add-pkg-exports",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Tool to add exports field to package.json",
   "keywords": [
     "cli-tool",
@@ -56,7 +56,7 @@
     "eslint": "^9.15.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-node-specifier": "^1.0.2",
-    "eslint-plugin-treekeeper": "^1.1.0",
+    "eslint-plugin-treekeeper": "^1.1.1",
     "eslint-plugin-unused-imports": "^4.1.4",
     "monocart-coverage-reports": "^2.11.2",
     "prettier": "^3.2.5",
