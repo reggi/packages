@@ -8,12 +8,20 @@
   },
   "license": "MIT",
   "author": "reggi <me@reggi.com> (https://reggi.com)",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "dist/index.cjs",
   "files": [
     "dist/",
     "src/"
   ],
   "scripts": {
     "build": "npm run build:only --if-present && npm run style:fix && npm run pkg:fix",
+    "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
     "depcheck": "depcheck --ignores='tsup,sort-package-json'",
