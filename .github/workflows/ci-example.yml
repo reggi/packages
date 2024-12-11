@@ -56,4 +56,4 @@ jobs:
       - name: Report results
         run: npm run test --w=workspaces/example --if-present
       - name: Run workspace
-        run: ./src/test/index.ts --w=workspaces/example
+        run: ./src/test/index.ts --w=example

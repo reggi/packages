@@ -56,4 +56,4 @@ jobs:
       - name: Report results
         run: npm run test --w=workspaces/workspace-paths --if-present
       - name: Run workspace
-        run: ./src/test/index.ts --w=workspaces/workspace-paths
+        run: ./src/test/index.ts --w=workspace-paths
