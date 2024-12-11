@@ -38,5 +38,5 @@
   },
   "prerelease": true,
   "prerelease-type": "pre",
-  "versioning-strategy": "prerelease"
+  "versioning-strategy": "semver"
 }
