@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: googleapis/release-please-action@v4
+      - uses: reggi/release-please-action@v5
         with:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
           config-file: 'release-please-config.json'
