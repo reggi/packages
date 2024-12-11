@@ -83,7 +83,7 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
           : []),
         {
           name: 'Run build script',
-          run: `npm run build ${isRoot ? '' : `-w=workspaces/${name}`} --if-present`,
+          run: `npm run build ${isRoot ? '' : `--w=workspaces/${name}`} --if-present`,
         },
         {
           name: 'Check if repo is porcelain',
@@ -91,7 +91,7 @@ const buildAndTestTemplate = (name: string = '', isRoot = name === '') => ({
         },
         {
           name: 'Report results',
-          run: `npm run test ${isRoot ? '' : `-w=workspaces/${name}`} --if-present`,
+          run: `npm run test ${isRoot ? '' : `--w=workspaces/${name}`} --if-present`,
         },
         ...(isRoot ? [] : [{name: 'Run workspace', run: `./src/test/index.ts --w=workspaces/${name}`}]),
       ],
