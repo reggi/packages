@@ -86,7 +86,7 @@ const {values} = parseArgs({
   args: process.argv.slice(2),
   options: {
     workspaces: {type: 'boolean'},
-    workspace: {type: 'string'},
+    workspace: {type: 'string', short: 'w'},
   },
 })
 
