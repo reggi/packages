@@ -38,5 +38,6 @@
   },
   "prerelease": true,
   "prerelease-type": "pre",
+  "versioning": "semver",
   "versioning-strategy": "semver"
 }
