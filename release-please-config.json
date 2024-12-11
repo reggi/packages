@@ -32,11 +32,12 @@
   "packages": {
     "workspaces/add-pkg-exports": {},
     "workspaces/eslint-plugin-treekeeper": {},
-    "workspaces/example": {},
+    "workspaces/example": {
+      "prerelease": true
+    },
     "workspaces/knevee": {},
     "workspaces/workspace-paths": {}
   },
-  "prerelease": true,
   "prerelease-type": "pre",
   "versioning": "semver",
   "versioning-strategy": "semver"
