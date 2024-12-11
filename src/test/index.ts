@@ -86,21 +86,26 @@ const {values} = parseArgs({
   args: process.argv.slice(2),
   options: {
     workspaces: {type: 'boolean'},
-    workspace: {type: 'string', short: 'w'},
+    workspace: {type: 'string'},
+    w: {type: 'string'},
+    ws: {type: 'string'},
   },
 })
 
-if (values.workspaces) {
+const _workspaces = values.workspaces || values.ws
+const _workspace = values.workspace || values.w
+
+if (_workspaces) {
   // Parallelize workspace processing
   await Promise.all(
     workspaces.map(async workspace => {
       runWorkspace(workspace)
     }),
   )
-} else if (values.workspace) {
-  const ws = workspaces.find(workspace => path.basename(workspace) === values.workspace)
+} else if (_workspace) {
+  const ws = workspaces.find(workspace => path.basename(workspace) === _workspace)
   if (!ws) {
-    throw new Error(`Workspace ${values.workspace} not found`)
+    throw new Error(`Workspace ${_workspace} not found`)
   }
   await runWorkspace(ws)
 }
