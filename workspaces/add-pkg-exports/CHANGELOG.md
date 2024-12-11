@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.5](https://github.com/reggi/packages/compare/add-pkg-exports-v1.0.4...add-pkg-exports-v1.0.5) (2024-12-11)
+
+
+### Bug Fixes
+
+* add pkg repository for monorepos ([ccae1c7](https://github.com/reggi/packages/commit/ccae1c7a89d5df3bda81cdecea3e3a4f0e16751c))
+* add-pkg-exports wrong bin ([c37dd79](https://github.com/reggi/packages/commit/c37dd794c78832c7882e65125c065f049d059674))
+* uses groupBy shim for older versions of node ([c19262a](https://github.com/reggi/packages/commit/c19262ac02b495a261e79b3e0ac2726e7977c9c0))
+
+
+### Documentation
+
+* fix typo ([a1ff83f](https://github.com/reggi/packages/commit/a1ff83fca0518e1f4530b8605aa955b37d797c76))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * eslint-plugin-treekeeper bumped from ^1.1.0 to ^1.1.1
+
 ## [1.0.3](https://github.com/reggi/packages/compare/add-pkg-exports-v1.0.2...add-pkg-exports-v1.0.3) (2024-12-08)
 
 

@@ -1,5 +1,5 @@
 {
-  "workspaces/add-pkg-exports": "1.0.4",
+  "workspaces/add-pkg-exports": "1.0.5",
   "workspaces/eslint-plugin-treekeeper": "1.1.0",
   "workspaces/example": "1.1.0-pre.0",
   "workspaces/knevee": "4.4.0",
