@@ -43,7 +43,7 @@ jobs:
       - name: Build source code
         run: npm run build:only --if-present --workspaces
       - name: Run build script
-        run: npm run build -w=eslint-plugin-treekeeper --if-present
+        run: npm run build -w=workspaces/eslint-plugin-treekeeper --if-present
       - name: Check if repo is porcelain
         run: |
           if [[ -z $(git diff --name-only HEAD) ]]; then
@@ -54,6 +54,6 @@ jobs:
             exit 1
           fi
       - name: Report results
-        run: npm run test -w=eslint-plugin-treekeeper --if-present
+        run: npm run test -w=workspaces/eslint-plugin-treekeeper --if-present
       - name: Run workspace
-        run: ./src/test/index.ts --workspace=workspaces/eslint-plugin-treekeeper
+        run: ./src/test/index.ts --w=workspaces/eslint-plugin-treekeeper
