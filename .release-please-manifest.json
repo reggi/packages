@@ -2,7 +2,7 @@
   "workspaces/add-pkg-exports": "1.0.3",
   "workspaces/eslint-plugin-treekeeper": "1.1.0",
   "workspaces/example": "1.1.0-pre.0",
-  "workspaces/future": "1.0.0",
+  "workspaces/future": "0.0.0",
   "workspaces/knevee": "4.4.0",
   "workspaces/workspace-paths": "1.1.1"
 }
