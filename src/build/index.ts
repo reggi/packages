@@ -305,6 +305,11 @@ for (const workspace of workspaces) {
       const replace = `import {recommended} from './dist/index.cjs'`
       swapContent = content.replace(find, replace)
     }
+    if (name === 'eslint-plugin-node-specifier' && basename === 'eslint.config.js') {
+      const find = `import nodeSpecifier from 'eslint-plugin-node-specifier'`
+      const replace = `import nodeSpecifier from './dist/index.cjs'`
+      swapContent = content.replace(find, replace)
+    }
     await fs.writeFile(path.join(workspace, basename), swapContent)
   }
 

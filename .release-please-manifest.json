@@ -1,5 +1,6 @@
 {
   "workspaces/add-pkg-exports": "1.0.3",
+  "workspaces/eslint-plugin-node-specifier": "1.0.2",
   "workspaces/eslint-plugin-treekeeper": "1.1.0",
   "workspaces/future": "1.0.0",
   "workspaces/knevee": "4.4.0",

@@ -31,6 +31,7 @@
   ],
   "packages": {
     "workspaces/add-pkg-exports": {},
+    "workspaces/eslint-plugin-node-specifier": {},
     "workspaces/eslint-plugin-treekeeper": {},
     "workspaces/future": {},
     "workspaces/knevee": {},

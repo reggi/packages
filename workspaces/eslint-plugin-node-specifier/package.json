@@ -1,0 +1,58 @@
+{
+  "name": "eslint-plugin-node-specifier",
+  "version": "1.0.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reggi/packages",
+    "directory": "workspaces/eslint-plugin-node-specifier"
+  },
+  "license": "MIT",
+  "author": "reggi <me@reggi.com> (https://reggi.com)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "npm run build:only --if-present && npm run style:fix && npm run pkg:fix",
+    "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
+    "build:test": "npm run build && npm run test",
+    "build:watch": "npm run build:only -- --watch",
+    "depcheck": "depcheck --ignores='@types/node,tsup,sort-package-json'",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "pkg": "sort-package-json --check",
+    "pkg:fix": "sort-package-json",
+    "report": "open ./coverage/index.html",
+    "style": "prettier --check .",
+    "style:fix": "prettier --write .",
+    "test": "npm run test:only && npm run style && npm run typecheck && npm run depcheck && npm run pkg && npm run lint",
+    "test:only": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test ./test/*.test.ts ./test/**/*.test.ts; fi",
+    "test:snap": "if [ -d ./test ]; then mcr --import tsx tsx --experimental-test-snapshots --test-update-snapshots --test ./test/*.test.ts ./test/**/*.test.ts; fi",
+    "typecheck": "tsc"
+  },
+  "prettier": "@github/prettier-config",
+  "devDependencies": {
+    "@github/prettier-config": "^0.0.6",
+    "@types/estree": "^1.0.6",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/parser": "^8.14.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.3.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-treekeeper": "^1.1.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "monocart-coverage-reports": "^2.11.2",
+    "prettier": "^3.2.5",
+    "sort-package-json": "^2.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
