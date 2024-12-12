@@ -22,6 +22,8 @@
     "workspaces/workspace-paths"
   ],
   "scripts": {
+    "add-token:gh": "gh secret set MY_RELEASE_PLEASE_TOKEN --body",
+    "add-token:npm": "gh secret set NPM_TOKEN --body",
     "build": "npm run build:only --if-present --workspaces && src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm run build --ws",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",

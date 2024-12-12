@@ -140,6 +140,8 @@ const scripts = {
 const rootScripts = {
   build: `${scripts.build} && npm run build --ws`,
   test: `${scripts.test}`,
+  'add-token:npm': 'gh secret set NPM_TOKEN --body',
+  'add-token:gh': 'gh secret set MY_RELEASE_PLEASE_TOKEN --body',
 }
 
 const rootJson = JSON.parse(await fs.readFile(path.join(process.cwd(), 'package.json'), 'utf8'))
