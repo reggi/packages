@@ -8,7 +8,7 @@ const execAsync = promisify(exec)
 export const tsdoc2json = async file => {
   const {stdout} = await execAsync(`deno doc --json ${file}`)
   const data = JSON.parse(stdout.trim())
-  return data?.nodes[0].classDef?.properties.map(v => {
+  return data?.nodes?.[0].classDef?.properties.map(v => {
     const getTypeString = tsType => {
       if (tsType.kind === 'union') {
         return tsType.union.map(getTypeString).join(' | ')
