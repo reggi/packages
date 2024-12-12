@@ -5,3 +5,7 @@ export const rules = {
   'enforce-node-specifier': enforceNodeSpecifier,
   'disallow-node-specifier': disallowNodeSpecifier,
 }
+
+export default {
+  rules,
+}
