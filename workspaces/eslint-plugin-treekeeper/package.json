@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-treekeeper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "keywords": [
     "eslint",
     "plugin",
@@ -97,7 +97,7 @@
     "depcheck": "^1.4.7",
     "eslint": "^9.15.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-node-specifier": "^1.0.2",
+    "eslint-plugin-node-specifier": "^1.0.3",
     "eslint-plugin-unused-imports": "^4.1.4",
     "mock-fs": "^5.4.1",
     "monocart-coverage-reports": "^2.11.2",
