@@ -13,7 +13,13 @@
     "src/"
   ],
   "workspaces": [
-    "workspaces/*"
+    "workspaces/add-pkg-exports",
+    "workspaces/eslint-plugin-node-specifier",
+    "workspaces/eslint-plugin-treekeeper",
+    "workspaces/future",
+    "workspaces/knevee",
+    "workspaces/ts-starter",
+    "workspaces/workspace-paths"
   ],
   "scripts": {
     "build": "npm run build:only --if-present --workspaces && src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm run build --ws",
