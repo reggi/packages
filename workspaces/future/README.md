@@ -35,20 +35,34 @@ future.then(result => {
 });
 ```
 
+## Why
+
+Let's say you want to write async code and use it's future value without actually executing it. You want the ability to pass it around and at the very end call await on the whole chain of (possibly async operations) _once_.
+
+```js
+import { Future } from "@reggi/future"
+
+const id = 1
+
+const person = new Future(async () => {
+  const response = await fetch(`https://swapi.dev/api/people/${id}`)
+  return response.json()
+})
+
+const homeworld = new Future(async (person) => {
+  const response = await fetch(person.homeworld)
+  return response.json()
+}, [person])
+
+// Unlike a traditiona `new Promise` these callbacks have not run yet.
+// Nothing has been executed
+
+// When we call `await` on `homeworld` it will run the async `person` callback.
+console.log((await homeworld).name) // JSON body response for homeworld
+console.log((await person).name) // JSON body response for person (doesnt run any fetch again)
+```
 
 ## Examples
-
-### Basic Usage
-
-```typescript
-const future = new Future(async () => {
-  return 'Hello, Future!';
-});
-
-future.then(result => {
-  console.log(result); // Output: Hello, Future!
-});
-```
 
 ### Using Dependencies
 
