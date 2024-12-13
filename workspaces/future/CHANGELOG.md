@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/reggi/packages/compare/future-v1.0.2...future-v1.0.3) (2024-12-13)
+
+
+### Bug Fixes
+
+* adds example to future readme ([09d5661](https://github.com/reggi/packages/commit/09d5661eaffb30fe51dc1d326440d415f7874f23))
+* adds example to future readme x2 ([6aa2a1e](https://github.com/reggi/packages/commit/6aa2a1e1ce0a61cf8eadc2d1979d76bc2bf13aa7))
+
 ## [1.0.2](https://github.com/reggi/packages/compare/future-v1.0.1...future-v1.0.2) (2024-12-12)
 
 
