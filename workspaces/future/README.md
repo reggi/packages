@@ -50,16 +50,18 @@ const person = new Future(async () => {
 })
 
 const homeworld = new Future(async (person) => {
+  // `person` is the resolved promise value from the `person` future.
   const response = await fetch(person.homeworld)
   return response.json()
 }, [person])
 
-// Unlike a traditiona `new Promise` these callbacks have not run yet.
+// Unlike a traditional `new Promise` these callbacks have not run yet.
 // Nothing has been executed
 
-// When we call `await` on `homeworld` it will run the async `person` callback.
-console.log((await homeworld).name) // JSON body response for homeworld
-console.log((await person).name) // JSON body response for person (doesnt run any fetch again)
+// When we call `await` on `homeworld` it will run the both callbacks.
+console.log((await homeworld).name) // Tatooine
+// When we run await on person we still can access the value but it doesnt run fetch again
+console.log((await person).name) // Luke Skywalker
 ```
 
 ## Examples
