@@ -1,31 +1,28 @@
 {
-  "name": "@reggi/packages",
-  "version": "0.0.0",
+  "name": "@reggi/template",
+  "version": "1.2.2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reggi/packages"
+    "url": "https://github.com/reggi/packages",
+    "directory": "workspaces/ts-starter"
   },
   "license": "MIT",
   "author": "reggi <me@reggi.com> (https://reggi.com)",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "dist/index.cjs",
   "files": [
     "dist/",
     "src/"
   ],
-  "workspaces": [
-    "workspaces/add-pkg-exports",
-    "workspaces/eslint-plugin-node-specifier",
-    "workspaces/eslint-plugin-treekeeper",
-    "workspaces/future",
-    "workspaces/knevee",
-    "workspaces/ts-starter",
-    "workspaces/workspace-paths",
-    "workspaces/template"
-  ],
   "scripts": {
-    "add-token:gh": "gh secret set MY_RELEASE_PLEASE_TOKEN --body",
-    "add-token:npm": "gh secret set NPM_TOKEN --body",
-    "build": "npm run build:only --if-present --workspaces && src/build/index.ts && npm run build:only --if-present && npm run style:fix && npm run pkg:fix && npm run build --ws",
+    "build": "npm run build:only --if-present && npm run style:fix && npm run pkg:fix",
+    "build:only": "tsup --clean ./src/*.ts --format esm,cjs --dts",
     "build:test": "npm run build && npm run test",
     "build:watch": "npm run build:only -- --watch",
     "depcheck": "depcheck --ignores='@types/node,tsup,sort-package-json'",
@@ -42,12 +39,6 @@
     "typecheck": "tsc"
   },
   "prettier": "@github/prettier-config",
-  "dependencies": {
-    "@types/yaml": "^1.9.6",
-    "glob": "^11.0.0",
-    "workspace-paths": "^1.0.0",
-    "yaml": "^2.6.1"
-  },
   "devDependencies": {
     "@github/prettier-config": "^0.0.6",
     "@types/node": "^22.10.1",
@@ -55,8 +46,8 @@
     "depcheck": "^1.4.7",
     "eslint": "^9.15.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-node-specifier": "^1.0.2",
-    "eslint-plugin-treekeeper": "^1.1.0",
+    "eslint-plugin-node-specifier": "^1.0.3",
+    "eslint-plugin-treekeeper": "^1.1.1",
     "eslint-plugin-unused-imports": "^4.1.4",
     "monocart-coverage-reports": "^2.11.2",
     "prettier": "^3.2.5",
@@ -64,5 +55,10 @@
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@npmcli/map-workspaces": "^4.0.2",
+    "fast-json-patch": "^3.1.1",
+    "jsonpath": "^1.1.1"
   }
 }
