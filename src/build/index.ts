@@ -249,7 +249,9 @@ const updatePackageJson = async (name: string, workspace: string, repositoryUrl:
     ...(checkSrcFiles.length ? {tsup} : {}),
   }
 
-  delete devDependencies[name]
+  if (devDependencies && Object.keys(devDependencies).includes(packageJson.name)) {
+    devDependencies[packageJson.name] = `file://.`
+  }
 
   const extend = {
     scripts: {
@@ -301,18 +303,7 @@ for (const workspace of workspaces) {
   await fs.writeFile(path.join(process.cwd(), '.github', 'workflows', filename), content)
 
   for (const {basename, content} of readRoot) {
-    let swapContent = content
-    if (name === 'eslint-plugin-treekeeper' && basename === 'eslint.config.js') {
-      const find = `import {recommended} from 'eslint-plugin-treekeeper'`
-      const replace = `import {recommended} from './dist/index.cjs'`
-      swapContent = content.replace(find, replace)
-    }
-    if (name === 'eslint-plugin-node-specifier' && basename === 'eslint.config.js') {
-      const find = `import nodeSpecifier from 'eslint-plugin-node-specifier'`
-      const replace = `import nodeSpecifier from './dist/index.cjs'`
-      swapContent = content.replace(find, replace)
-    }
-    await fs.writeFile(path.join(workspace, basename), swapContent)
+    await fs.writeFile(path.join(workspace, basename), content)
   }
 
   const {version, name: pkgName} = await updatePackageJson(name, workspace, repositoryUrl)

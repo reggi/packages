@@ -1,7 +1,7 @@
 import path from 'node:path'
 import eslintPluginImport from 'eslint-plugin-import'
 import typescriptParser from '@typescript-eslint/parser'
-import {recommended} from './dist/index.cjs'
+import {recommended} from 'eslint-plugin-treekeeper'
 import nodeSpecifier from 'eslint-plugin-node-specifier'
 import unusedImports from 'eslint-plugin-unused-imports'
 
