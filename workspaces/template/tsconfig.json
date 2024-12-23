@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target": "ESNext",
+    "outDir": "./dist",
+    "moduleResolution": "nodenext",
+    "rootDir": ".",
+    "declaration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "noEmit": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["coverage/**", "dist/**", "node_modules/**", "workspaces/**"]
+}
