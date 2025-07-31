@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/reggi/packages/compare/future-v1.0.3...future-v1.0.4) (2025-07-31)
+
+
+### Documentation
+
+* first publish with oidc ([5cb181e](https://github.com/reggi/packages/commit/5cb181ec657cab6f83bdb3f1192aa2c1eeb95b60))
+
 ## [1.0.3](https://github.com/reggi/packages/compare/future-v1.0.2...future-v1.0.3) (2024-12-13)
 
 
