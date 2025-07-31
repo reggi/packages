@@ -207,3 +207,5 @@ update<D extends readonly any[]>(operation: Operation<T, [T, ...D]>, dependencie
 ```
 
 Updates the `Future` value with a new operation and dependencies.
+
+> Note: First package published with OIDC
