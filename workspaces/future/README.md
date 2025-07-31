@@ -6,6 +6,7 @@ The `Future` class is a utility for managing asynchronous operations and their d
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Why](#why)
 - [Examples](#examples)
 - [API](#api)
   - [Constructor](#constructor)
